@@ -1,3 +1,5 @@
+#pragma once
+
 #include "IEventsHandler.hpp"
 #include "Logger/PrefixedLogger.hpp"
 #include "Context.hpp"
@@ -15,11 +17,12 @@ public:
     void handleTimeout() override;
 
     // IBtsEventsHandler interface
+    void handleDisconnected() override;
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
 
-private:
+protected:
     Context& context;
     common::PrefixedLogger logger;
 };
