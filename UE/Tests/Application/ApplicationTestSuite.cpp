@@ -7,6 +7,7 @@
 #include "Mocks/IUserPortMock.hpp"
 #include "Mocks/ITimerPortMock.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "Mocks/ICrudSmsRepositoryMock.hpp"
 #include <memory>
 
 namespace ue
@@ -22,6 +23,7 @@ protected:
     StrictMock<IBtsPortMock> btsPortMock;
     StrictMock<IUserPortMock> userPortMock;
     StrictMock<ITimerPortMock> timerPortMock;
+    StrictMock<ICrudSmsRepositoryMock> smsRepositoryMock;
 
     Expectation notConnectedExpecation = EXPECT_CALL(userPortMock, showNotConnected());
 
@@ -29,7 +31,8 @@ protected:
                                 loggerMock,
                                 btsPortMock,
                                 userPortMock,
-                                timerPortMock};
+                                timerPortMock,
+                                smsRepositoryMock};
 };
 
 struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
