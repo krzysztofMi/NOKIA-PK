@@ -26,4 +26,3 @@ qt5_use_modules(${PROJECT_NAME}  Widgets)
 qt5_use_modules(${PROJECT_NAME}  Network)
 
 target_link_qt()
-

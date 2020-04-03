@@ -4,6 +4,7 @@
 #include "Messages/PhoneNumber.hpp"
 #include "IEventsHandler.hpp"
 #include "Context.hpp"
+#include "Database/Repository/SmsOrm.hpp"
 
 namespace ue
 {
@@ -19,7 +20,7 @@ public:
                 IBtsPort& bts,
                 IUserPort& user,
                 ITimerPort& timer,
-                ICrudSmsRepository& smsDb);
+                IOrm<Sms>& smsRepository);
     ~Application();
 
     // ITimerEventsHandler interface

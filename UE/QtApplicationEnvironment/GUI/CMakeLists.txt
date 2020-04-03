@@ -13,6 +13,5 @@ add_library(${PROJECT_NAME} ${SRC_LIST})
 qt5_use_modules(${PROJECT_NAME}  Widgets)
 qt5_use_modules(${PROJECT_NAME}  Network)
 
-
 target_link_qt()
 

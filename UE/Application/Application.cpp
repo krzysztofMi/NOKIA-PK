@@ -9,8 +9,8 @@ Application::Application(common::PhoneNumber phoneNumber,
                          IBtsPort &bts,
                          IUserPort &user,
                          ITimerPort &timer,
-                         ICrudSmsRepository &smsDb)
-    : context{iLogger, bts, user, timer, smsDb},
+                         IOrm<Sms> &smsRepository)
+    : context{iLogger, bts, user, timer, smsRepository},
       logger(iLogger, "[APP] ")
 {
     logger.logInfo("Started");

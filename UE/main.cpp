@@ -3,7 +3,7 @@
 #include "Ports/BtsPort.hpp"
 #include "Ports/UserPort.hpp"
 #include "Ports/TimerPort.hpp"
-#include "Database/Repository/SmsRepository.hpp"
+#include "Database/Repository/SmsOrm.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -19,7 +19,9 @@ int main(int argc, char* argv[])
     BtsPort bts(logger, tranport, phoneNumber);
     UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
-    SmsRepository smsRepository(logger);
+    Orm<Sms> smsRepository(logger, "[SMS-DATABASE]");
+    smsRepository.insert(sms);
+    smsRepository.update(sms);
     Application app(phoneNumber, logger, bts, user, timer, smsRepository);
     bts.start(app);
     user.start(app);
