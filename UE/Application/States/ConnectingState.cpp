@@ -32,4 +32,10 @@ void ConnectingState::handleAttachAccept()
     context.setState<ConnectedState>();
 }
 
+void ConnectingState::handleDisconnected()
+{
+    context.logger.logInfo("disconnecting");
+    context.setState<NotConnectedState>();
+}
+
 }
