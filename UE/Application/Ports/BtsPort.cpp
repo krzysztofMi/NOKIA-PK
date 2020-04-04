@@ -68,7 +68,6 @@ void BtsPort::handleMessage(BinaryMessage msg)
     }
 }
 
-
 void BtsPort::sendAttachRequest(common::BtsId btsId)
 {
     logger.logDebug("sendAttachRequest: ", btsId);
@@ -77,8 +76,6 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
                                 common::PhoneNumber{}};
     msg.writeBtsId(btsId);
     transport.sendMessage(msg.getMessage());
-
-
 }
 
 }
