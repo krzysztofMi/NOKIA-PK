@@ -18,6 +18,8 @@ public:
     void showNotConnected() override;
     void showConnecting() override;
     void showConnected() override;
+    void showComposeSms();
+    void showSmsListView();
 
 private:
     common::PrefixedLogger logger;
