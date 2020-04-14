@@ -1,0 +1,47 @@
+name: C/C++ CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: install sqlite3
+      run: sudo apt-get install sqlite3
+    
+    - name: install libsqlite3-dev
+      run: sudo apt install libsqlite3-dev
+      
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v1
+      with:
+        path: ../Qt
+        key: QtCache
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
+        cached: ${{ steps.cache-qt.outputs.cache-hit }}
+
+    - name: gcc version
+      run: gcc --version
+    
+    - name: cmake
+      run: cmake .
+
+    - name: make
+      run: make
+
+    - name: UE tests
+      run: ./UE/Tests/Application/UeApplicationUT
+    - name: BTS tests
+      run: ./BTS/Tests/Application/BtsApplicationUT
+    - name: Common tests
+      run: ./COMMON/Tests/COMMON_UT

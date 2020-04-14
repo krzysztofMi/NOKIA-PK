@@ -76,7 +76,6 @@ void BtsPort::handleMessage(BinaryMessage msg)
     }
 }
 
-
 void BtsPort::sendAttachRequest(common::BtsId btsId)
 {
     logger.logDebug("sendAttachRequest: ", btsId);

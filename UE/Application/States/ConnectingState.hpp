@@ -12,6 +12,7 @@ public:
     void handleAttachReject() override;
     void handleTimeout() override;
     void handleAttachAccept() override;
+    void handleDisconnected() override;
 };
 
 }
