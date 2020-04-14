@@ -20,8 +20,6 @@ int main(int argc, char* argv[])
     UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
     Orm<Sms> smsRepository(logger, "[SMS-DATABASE]");
-    smsRepository.insert(sms);
-    smsRepository.update(sms);
     Application app(phoneNumber, logger, bts, user, timer, smsRepository);
     bts.start(app);
     user.start(app);

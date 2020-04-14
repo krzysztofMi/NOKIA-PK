@@ -11,6 +11,7 @@ struct Sms{
   std::string text;
   uint8_t phoneNumber;
   bool read;
+  bool sent;
 
   static std::string getEntityName();
 };
