@@ -1,0 +1,9 @@
+.vscode/
+Makefile
+CMakeFiles/
+*syslog*
+cmake_install.cmake
+*autogen*
+CTestTestfile.cmake
+generated/
+CMakeCache.txt

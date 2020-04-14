@@ -7,4 +7,3 @@ aux_source_directory(. SRC_LIST)
 aux_source_directory(UeGui SRC_LIST)
 
 add_library(${PROJECT_NAME} ${SRC_LIST})
-
