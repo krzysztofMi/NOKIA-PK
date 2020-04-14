@@ -7,3 +7,9 @@ cmake_install.cmake
 CTestTestfile.cmake
 generated/
 CMakeCache.txt
+build/
+images/
+UE
+BTS
+*.a
+COMMON_UT
