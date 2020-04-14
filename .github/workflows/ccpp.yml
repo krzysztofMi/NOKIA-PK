@@ -11,8 +11,11 @@ jobs:
       with:
         submodules: true
 
-    - name: sqlite3
+    - name: install sqlite3
       run: sudo apt-get install sqlite3
+    
+    - name: install libsqlite3-dev
+      run: sudo apt install libsqlite3-dev
       
     - name: Cache Qt
       id: cache-qt
