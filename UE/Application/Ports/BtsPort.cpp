@@ -37,7 +37,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
     {
         common::IncomingMessage reader{msg};
         auto msgId = reader.readMessageId();
-        auto from = reader.readPhoneNumber();
+        common::PhoneNumber from = reader.readPhoneNumber();
         auto to = reader.readPhoneNumber();
 
         switch (msgId)
@@ -55,6 +55,14 @@ void BtsPort::handleMessage(BinaryMessage msg)
                 handler->handleAttachAccept();
             else
                 handler->handleAttachReject();
+            break;
+        }
+        case common::MessageId::Sms:
+        {
+            std::string message = reader.readRemainingText();
+            logger.logDebug("BtsPort, SmsRecieved from: ", from);
+            logger.logDebug("BtsPort, SmsRecieved msg: ", message);
+            handler->handleSmsReceived(from, message);
             break;
         }
         default:
@@ -77,5 +85,6 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
     msg.writeBtsId(btsId);
     transport.sendMessage(msg.getMessage());
 }
+
 
 }
