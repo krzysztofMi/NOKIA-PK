@@ -112,7 +112,7 @@ TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
         };
 
 
-    EXPECT_CALL(smsOrmMock, insert(incomingSms));
+    EXPECT_CALL(smsOrmMock, insert(_));
 
     objectUnderTest.handleSmsReceived(phoneNumber, message);
 }
