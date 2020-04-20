@@ -1,5 +1,6 @@
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
+#include "UeGui/ISmsComposeMode.hpp"
 
 namespace ue
 {
@@ -37,6 +38,33 @@ void UserPort::showConnected()
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+
+    setMenuCallbacks(menu);
+}
+
+void UserPort::showComposeSms(){
+    IUeGui::ISmsComposeMode& composeSms = gui.setSmsComposeMode();
+    //ADD REJECT CALLBACK (RETURN TO MENU).
+}
+
+void UserPort::showSmsListView(){
+    IUeGui::IListViewMode& smsListView = gui.setListViewMode();
+    //TODO ADD SMS TO LIST WITH READ/UNREAD FIELD
+    //ADD MOVE TO smsVIEW
+    //ADD REJECT CALLBACK(RETURN TO MENU)
+}
+
+void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
+    gui.setAcceptCallback([&](){
+        switch(menu.getCurrentItemIndex().second){
+            case 0:
+                showComposeSms();
+                break;
+            case 1:
+                showSmsListView();
+                break;
+        }
+    });
 }
 
 }
