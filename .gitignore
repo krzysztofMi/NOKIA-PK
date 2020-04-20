@@ -13,3 +13,6 @@ UE
 BTS
 *.a
 COMMON_UT
+
+# QtCreator CMake
+CMakeLists.txt.user*

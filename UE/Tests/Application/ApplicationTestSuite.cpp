@@ -100,8 +100,9 @@ TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedOnDisconect){
     objectUnderTest.handleDisconnected();
 }
 
-TEST_F(ApplicationTestSuite, shallSendMsg) {
+TEST_F(ApplicationConnectedTestSuite, shallSendMsg) {
     EXPECT_CALL(btsPortMock, sendMsg(common::PhoneNumber{115}, "test"));
+    EXPECT_CALL(smsOrmMock,insert(_));
     objectUnderTest.handleSendMsg(common::PhoneNumber{115}, "test");
 }
 }
