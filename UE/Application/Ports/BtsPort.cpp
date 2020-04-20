@@ -86,5 +86,12 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
     transport.sendMessage(msg.getMessage());
 }
 
-
+void BtsPort::sendMsg(common::PhoneNumber receiver, std::string content) {
+    logger.logDebug("sendSms: ", receiver);
+    common::OutgoingMessage msg {
+        common::MessageId::Sms,phoneNumber,receiver
+    };
+    msg.writeText(content);
+    transport.sendMessage(msg.getMessage());
+}
 }

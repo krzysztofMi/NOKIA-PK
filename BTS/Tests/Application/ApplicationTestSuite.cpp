@@ -36,5 +36,4 @@ TEST_F(ApplicationTestSuite, shallStopComponentsOnStop)
 
     objectUnderTest->stop();
 }
-
 }

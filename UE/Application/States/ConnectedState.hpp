@@ -13,7 +13,7 @@ public:
     void handleSmsReceived(common::PhoneNumber phoneNumber, std::string msg) final;
 
     void handleDisconnected() override;
-
+    void handleSendMsg(common::PhoneNumber receiver, std::string content) final;
 };
 
 }
