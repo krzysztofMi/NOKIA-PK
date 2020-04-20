@@ -99,4 +99,22 @@ TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedOnDisconect){
     EXPECT_CALL(userPortMock, showNotConnected());
     objectUnderTest.handleDisconnected();
 }
+
+TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
+{
+    auto phoneNumber = common::PhoneNumber{111};
+    auto message = "message";
+    Sms incomingSms = Sms {
+            phoneNumber.value,
+            message,
+            false,
+            false
+        };
+
+
+    EXPECT_CALL(smsOrmMock, insert(_));
+
+    objectUnderTest.handleSmsReceived(phoneNumber, message);
+}
+
 }
