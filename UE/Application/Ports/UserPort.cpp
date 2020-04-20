@@ -39,7 +39,7 @@ void UserPort::showConnected()
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
 
-    setMenuCallback(menu);
+    setMenuCallbacks(menu);
 }
 
 void UserPort::showComposeSms(){
