@@ -26,6 +26,8 @@ private:
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
+
+    void setMenuCallbacks(IUeGui::IListViewMode& menu);
 };
 
 }
