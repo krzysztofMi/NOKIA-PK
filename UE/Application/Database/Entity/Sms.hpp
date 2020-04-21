@@ -15,5 +15,8 @@ struct Sms{
 
   static std::string getEntityName();
 };
+
+bool operator== (const Sms &s1, const Sms &s2);
+
 }
 
