@@ -112,4 +112,17 @@ TEST_F(BtsPortTestSuite, shallHandleReceivedSms)
     messageCallback(message.getMessage());
 }
 
+TEST_F(BtsPortTestSuite, shallSendMsg)
+{
+    common::BinaryMessage msg;
+    EXPECT_CALL(transportMock, sendMessage(_)).WillOnce(SaveArg<0>(&msg));
+    objectUnderTest.sendMsg(common::PhoneNumber{115}, "test");
+    common::IncomingMessage reader(msg);
+    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::Sms, reader.readMessageId()) );
+    ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{115}, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ("test", reader.readRemainingText()));
+    ASSERT_NO_THROW(reader.checkEndOfMessage());
+}
+
 }

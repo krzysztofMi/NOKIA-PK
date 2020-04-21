@@ -100,6 +100,13 @@ TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedOnDisconect){
     objectUnderTest.handleDisconnected();
 }
 
+
+TEST_F(ApplicationConnectedTestSuite, shallSendMsg) {
+    EXPECT_CALL(btsPortMock, sendMsg(common::PhoneNumber{115}, "test"));
+    EXPECT_CALL(smsOrmMock,insert(_));
+    objectUnderTest.handleSendMsg(common::PhoneNumber{115}, "test");
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
 {
     auto phoneNumber = common::PhoneNumber{111};
@@ -116,5 +123,6 @@ TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
 
     objectUnderTest.handleSmsReceived(phoneNumber, message);
 }
+
 
 }

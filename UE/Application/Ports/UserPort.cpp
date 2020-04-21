@@ -44,7 +44,13 @@ void UserPort::showConnected()
 
 void UserPort::showComposeSms(){
     IUeGui::ISmsComposeMode& composeSms = gui.setSmsComposeMode();
-    //ADD REJECT CALLBACK (RETURN TO MENU).
+    gui.setAcceptCallback([&](){
+        handler->handleSendMsg(composeSms.getPhoneNumber(),composeSms.getSmsText());
+        composeSms.clearSmsText();
+    });
+    gui.setRejectCallback([&](){
+        showConnected();
+    });
 }
 
 void UserPort::showSmsListView(){

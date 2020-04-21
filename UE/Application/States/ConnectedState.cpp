@@ -28,5 +28,13 @@ void ConnectedState::handleDisconnected(){
     context.setState<NotConnectedState>();
 }
 
-
+void ConnectedState::handleSendMsg(common::PhoneNumber receiver, std::string content) {
+    context.bts.sendMsg(receiver, content);
+    Sms sendedSms;
+    sendedSms.phoneNumber = receiver.value;
+    sendedSms.text = content;
+    sendedSms.read = true;
+    sendedSms.sent = true;
+    context.sms.insert(sendedSms);
+}
 }
