@@ -34,6 +34,7 @@ void UserPort::showConnecting()
 
 void UserPort::showConnected()
 {
+    gui.showConnected();
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
