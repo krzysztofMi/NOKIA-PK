@@ -21,6 +21,7 @@ void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber,
     incomingSms.sent = false;
 
     context.sms.insert(incomingSms);   
+    context.user.showReceivedSmsNotification();
 }
 
 void ConnectedState::handleDisconnected(){

@@ -73,4 +73,9 @@ void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
     });
 }
 
+void UserPort::showReceivedSmsNotification()
+{
+    gui.showNewSms();
+}
+
 }
