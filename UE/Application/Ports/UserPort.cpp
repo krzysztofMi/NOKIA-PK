@@ -135,13 +135,10 @@ void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
     });
 }
 
-<<<<<<< HEAD
 void UserPort::showReceivedSmsNotification()
 {
     gui.showNewSms();
 }
-=======
->>>>>>> c4f91b562d816f4f7b39418de3d586b218160e32
 
 }
 
