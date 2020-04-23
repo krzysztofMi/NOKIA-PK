@@ -64,7 +64,12 @@ void UserPort::showComposeSms(){
     });
 }
 
+void UserPort::smsView(int id){
+    IUeGui::ITextMode& view = gui.setViewTextMode();
+    std::unique_ptr<Sms> sms = smsRepository.get(id);
+    view.setText(sms->text);
 
+}
 
 void UserPort::showSmsListView(){
     IUeGui::IListViewMode& smsListView = gui.setListViewMode();
@@ -77,21 +82,18 @@ void UserPort::showSmsListView(){
             smsFromDatabase=tablica.at(i).phoneNumber;
             std::string str= std::to_string(smsFromDatabase);
             smsListView.addSelectionListItem(str, "");
+            gui.setAcceptCallback([&](){
+                smsView(smsListView.getCurrentItemIndex().second+1);
+
+                });
+            gui.setRejectCallback([&](){
+                showConnected();
+            });
         }
 
-        gui.setAcceptCallback([&](){
-            switch(smsListView.getCurrentItemIndex().second){
-                case 0:
-                    smsListView.clearSelectionList();
-                    smsListView.addSelectionListItem("test1", "");
-                    break;
-                case 1:
-                    smsListView.clearSelectionList();
-                    smsListView.addSelectionListItem("test2", "");
-                    break;
-            }
-        });
-//      std::cout << input.at(i).text << ' ';
+
+
+
 
     }
 

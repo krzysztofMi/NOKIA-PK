@@ -21,6 +21,7 @@ public:
     void showConnected() override;
     void showComposeSms();
     void showSmsListView();
+    void smsView(int id);
 
 private:
     IOrm<Sms>& smsRepository;
