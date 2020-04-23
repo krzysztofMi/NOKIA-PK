@@ -1,14 +1,21 @@
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
+#include "UeGui/ITextMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
+#include <vector>
+#include <iostream>
+#include <string>
+
 
 namespace ue
 {
 
-UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber)
+UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber, IOrm<Sms>& smsRepository)
     : logger(logger, "[USER-PORT]"),
       gui(gui),
-      phoneNumber(phoneNumber)
+      phoneNumber(phoneNumber),
+      smsRepository{smsRepository}
+
 {}
 
 void UserPort::start(IUserEventsHandler &handler)
@@ -38,7 +45,11 @@ void UserPort::showConnected()
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
-    menu.addSelectionListItem("View SMS", "");
+    menu.addSelectionListItem("SMS Received", "");
+    menu.addSelectionListItem("SMS Sent", "");
+
+
+
 
     setMenuCallbacks(menu);
 }
@@ -54,12 +65,57 @@ void UserPort::showComposeSms(){
     });
 }
 
+void UserPort::smsView(int id){
+    IUeGui::ITextMode& view = gui.setViewTextMode();
+    std::unique_ptr<Sms> sms = smsRepository.get(id);
+    view.setText(sms->text);
+
+}
+
 void UserPort::showSmsListView(){
     IUeGui::IListViewMode& smsListView = gui.setListViewMode();
-    //TODO ADD SMS TO LIST WITH READ/UNREAD FIELD
-    //ADD MOVE TO smsVIEW
-    //ADD REJECT CALLBACK(RETURN TO MENU)
+
+
+    std::vector<Sms> tablica = smsRepository.getAll();
+    int smsFromDatabase;
+    for (int i = 0; i < tablica.size(); i++) {
+        if(tablica.at(i).sent==true){
+            smsFromDatabase=tablica.at(i).phoneNumber;
+            std::string str= std::to_string(smsFromDatabase);
+            smsListView.addSelectionListItem(str, "");
+            gui.setAcceptCallback([&](){
+                smsView(smsListView.getCurrentItemIndex().second+1);
+
+                });
+            gui.setRejectCallback([&](){
+                showConnected();
+            });
+        }
+    }
 }
+
+void UserPort::showSmsListViewSent(){
+    IUeGui::IListViewMode& smsListView = gui.setListViewMode();
+
+
+    std::vector<Sms> tablica = smsRepository.getAll();
+    int smsFromDatabase;
+    for (int i = 0; i < tablica.size(); i++) {
+        if(tablica.at(i).sent==false){
+            smsFromDatabase=tablica.at(i).phoneNumber;
+            std::string str= std::to_string(smsFromDatabase);
+            smsListView.addSelectionListItem(str, "");
+            gui.setAcceptCallback([&](){
+                smsView(smsListView.getCurrentItemIndex().second+1);
+
+                });
+            gui.setRejectCallback([&](){
+                showConnected();
+            });
+        }
+    }
+}
+
 
 void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
     gui.setAcceptCallback([&](){
@@ -68,15 +124,24 @@ void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
                 showComposeSms();
                 break;
             case 1:
+                menu.clearSelectionList();
                 showSmsListView();
+                break;
+            case 2:
+                menu.clearSelectionList();
+                showSmsListViewSent();
                 break;
         }
     });
 }
 
+<<<<<<< HEAD
 void UserPort::showReceivedSmsNotification()
 {
     gui.showNewSms();
 }
+=======
+>>>>>>> c4f91b562d816f4f7b39418de3d586b218160e32
 
 }
+
