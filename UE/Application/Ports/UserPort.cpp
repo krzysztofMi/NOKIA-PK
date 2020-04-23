@@ -90,19 +90,30 @@ void UserPort::showSmsListView(){
                 showConnected();
             });
         }
-
-
-
-
-
     }
-
-
-    //TODO ADD SMS TO LIST WITH READ/UNREAD FIELD
-    //ADD MOVE TO smsVIEW
-    //ADD REJECT CALLBACK(RETURN TO MENU)
 }
 
+void UserPort::showSmsListViewSent(){
+    IUeGui::IListViewMode& smsListView = gui.setListViewMode();
+
+
+    std::vector<Sms> tablica = smsRepository.getAll();
+    int smsFromDatabase;
+    for (int i = 0; i < tablica.size(); i++) {
+        if(tablica.at(i).sent==false){
+            smsFromDatabase=tablica.at(i).phoneNumber;
+            std::string str= std::to_string(smsFromDatabase);
+            smsListView.addSelectionListItem(str, "");
+            gui.setAcceptCallback([&](){
+                smsView(smsListView.getCurrentItemIndex().second+1);
+
+                });
+            gui.setRejectCallback([&](){
+                showConnected();
+            });
+        }
+    }
+}
 
 
 void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
@@ -114,7 +125,10 @@ void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
             case 1:
                 menu.clearSelectionList();
                 showSmsListView();
-
+                break;
+            case 2:
+                menu.clearSelectionList();
+                showSmsListViewSent();
                 break;
         }
     });

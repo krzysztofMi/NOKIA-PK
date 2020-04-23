@@ -21,6 +21,7 @@ public:
     void showConnected() override;
     void showComposeSms();
     void showSmsListView();
+    void showSmsListViewSent();
     void smsView(int id);
 
 private:
