@@ -111,16 +111,9 @@ TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
 {
     auto phoneNumber = common::PhoneNumber{111};
     auto message = "message";
-    Sms incomingSms = Sms {
-            phoneNumber.value,
-            message,
-            false,
-            false
-        };
-
 
     EXPECT_CALL(smsOrmMock, insert(_));
-
+    EXPECT_CALL(userPortMock, showReceivedSmsNotification);
     objectUnderTest.handleSmsReceived(phoneNumber, message);
 }
 

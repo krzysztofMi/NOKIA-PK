@@ -236,14 +236,16 @@ void QtUeGui::showPeerUserNotAvailable(PhoneNumber peer)
 void QtUeGui::setConnectedStateSlot(QString text, bool connected)
 {
     logger.logDebug("GUI: setConnectedStateSlot(", text.toStdString(), ")");
-    connectedStateLabel.setEnabled(connected);
+    bool show = connected ? false : true;
+    connectedStateLabel.setEnabled(show);
     connectedStateLabel.setToolTip(text);
 }
 
 void QtUeGui::setNewMessageSlot(bool value)
 {
     logger.logDebug("GUI: setNewMessageSlot(", value, ")");
-    newMessageLabel.setEnabled(value);
+    bool show = value ? false : true;
+    newMessageLabel.setEnabled(show);
     newMessageLabel.setToolTip(value ? "New message(s)" : "No new messages");
 }
 

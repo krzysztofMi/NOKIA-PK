@@ -19,6 +19,7 @@ public:
     void showNotConnected() override;
     void showConnecting() override;
     void showConnected() override;
+    void showReceivedSmsNotification() override;
     void showComposeSms();
     void showSmsListView();
     void showSmsListViewSent();
