@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
     auto phoneNumber = appEnv->getMyPhoneNumber();
 
     BtsPort bts(logger, tranport, phoneNumber);
-    UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
     Orm<Sms> smsRepository(logger, "[SMS-DATABASE]");
+    UserPort user(logger, gui, phoneNumber, smsRepository);
     Application app(phoneNumber, logger, bts, user, timer, smsRepository);
     bts.start(app);
     user.start(app);
