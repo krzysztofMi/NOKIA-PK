@@ -10,12 +10,10 @@
 namespace ue
 {
 
-UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber, IOrm<Sms>& smsRepository)
+UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber)
     : logger(logger, "[USER-PORT]"),
       gui(gui),
-      phoneNumber(phoneNumber),
-      smsRepository{smsRepository}
-
+      phoneNumber(phoneNumber)
 {}
 
 void UserPort::start(IUserEventsHandler &handler)
@@ -47,10 +45,6 @@ void UserPort::showConnected()
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("SMS Received", "");
     menu.addSelectionListItem("SMS Sent", "");
-
-
-
-
     setMenuCallbacks(menu);
 }
 
@@ -65,15 +59,9 @@ void UserPort::showComposeSms(){
     });
 }
 
-void UserPort::smsView(int id){
-    IUeGui::ITextMode& view = gui.setViewTextMode();
-    std::unique_ptr<Sms> sms = smsRepository.get(id);
-    view.setText(sms->text);
-
-}
-
-void UserPort::showSmsListView(){
+void UserPort::showSmsListView(std::vector<Sms> smsVector){
     IUeGui::IListViewMode& smsListView = gui.setListViewMode();
+<<<<<<< Updated upstream
 
 
     std::vector<Sms> tablica = smsRepository.getAll();
@@ -114,8 +102,26 @@ void UserPort::showSmsListViewSent(){
             });
         }
     }
+=======
+    ids.clear();
+    smsListView.clearSelectionList();
+    for(auto sms: smsVector){
+        smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+        ids.push_back(sms.id);
+    }
+    gui.setAcceptCallback([&](){
+        handler->handleGetSmsById(ids.at(smsListView.getCurrentItemIndex().second));
+    });
+    gui.setRejectCallback([&](){
+        showConnected();
+    });
 }
 
+void UserPort::showSmsView(Sms sms){
+    IUeGui::ITextMode& view = gui.setViewTextMode();
+    view.setText(sms.text);
+>>>>>>> Stashed changes
+}
 
 void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
     gui.setAcceptCallback([&](){
@@ -124,21 +130,22 @@ void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
                 showComposeSms();
                 break;
             case 1:
-                menu.clearSelectionList();
-                showSmsListView();
+                handler->handleGetAllSmsBySent(false);
                 break;
             case 2:
-                menu.clearSelectionList();
-                showSmsListViewSent();
+                handler->handleGetAllSmsBySent(true);
                 break;
         }
     });
 }
 
+<<<<<<< Updated upstream
 void UserPort::showReceivedSmsNotification()
 {
     gui.showNewSms();
 }
 
+=======
+>>>>>>> Stashed changes
 }
 

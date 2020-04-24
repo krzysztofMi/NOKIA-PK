@@ -14,6 +14,7 @@ ConnectedState::ConnectedState(Context &context)
 void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber, 
                                        std::string msg)
 {
+<<<<<<< Updated upstream
     Sms incomingSms;
     incomingSms.phoneNumber = phoneNumber.value;
     incomingSms.text = msg;
@@ -22,6 +23,9 @@ void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber,
 
     context.sms.insert(incomingSms);   
     context.user.showReceivedSmsNotification();
+=======
+    context.database.saveSms(msg, phoneNumber, false, false);
+>>>>>>> Stashed changes
 }
 
 void ConnectedState::handleDisconnected(){
@@ -31,11 +35,20 @@ void ConnectedState::handleDisconnected(){
 
 void ConnectedState::handleSendMsg(common::PhoneNumber receiver, std::string content) {
     context.bts.sendMsg(receiver, content);
-    Sms sendedSms;
-    sendedSms.phoneNumber = receiver.value;
-    sendedSms.text = content;
-    sendedSms.read = true;
-    sendedSms.sent = true;
-    context.sms.insert(sendedSms);
+    context.database.saveSms(content, receiver, true, true);
 }
+
+void ConnectedState::handleGetAllSmsBySent(bool sent){
+    context.user.showSmsListView(context.database.getAllSmsBySent(sent));
+}
+
+void ConnectedState::handleGetSmsById(int id){
+    std::unique_ptr<Sms> sms = context.database.getSmsById(id);
+    context.user.showSmsView(*sms);
+}
+
+void ConnectedState::handleUpdateSms(Sms sms){
+    context.database.updateSms(sms);
+}
+
 }

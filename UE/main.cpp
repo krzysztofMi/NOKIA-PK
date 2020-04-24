@@ -3,7 +3,7 @@
 #include "Ports/BtsPort.hpp"
 #include "Ports/UserPort.hpp"
 #include "Ports/TimerPort.hpp"
-#include "Database/Repository/SmsOrm.hpp"
+#include "Ports/SmsDatabasePort.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -18,9 +18,9 @@ int main(int argc, char* argv[])
 
     BtsPort bts(logger, tranport, phoneNumber);
     TimerPort timer(logger);
-    Orm<Sms> smsRepository(logger, "[SMS-DATABASE]");
-    UserPort user(logger, gui, phoneNumber, smsRepository);
-    Application app(phoneNumber, logger, bts, user, timer, smsRepository);
+    SmsDatabasePort database(logger, "../../NOKIA-PK/UE/Application/Database/Schema/smsDatabase.db");
+    UserPort user(logger, gui, phoneNumber);
+    Application app(phoneNumber, logger, bts, user, timer, database);
     bts.start(app);
     user.start(app);
     timer.start(app);

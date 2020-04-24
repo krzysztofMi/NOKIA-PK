@@ -5,14 +5,17 @@
 #include "IUeGui.hpp"
 #include "Messages/PhoneNumber.hpp"
 #include "Database/Repository/IOrm.hpp"
-#include "Database/Repository/SmsOrm.hpp"
+#include "Database/Repository/Orm.hpp"
 namespace ue
 {
 
 class UserPort : public IUserPort
 {
 public:
-    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber, IOrm<Sms>& smsRepository);
+    UserPort(common::ILogger& logger,
+            IUeGui& gui,
+            common::PhoneNumber phoneNumber);
+
     void start(IUserEventsHandler& handler);
     void stop();
 
@@ -21,17 +24,15 @@ public:
     void showConnected() override;
     void showReceivedSmsNotification() override;
     void showComposeSms();
-    void showSmsListView();
-    void showSmsListViewSent();
-    void smsView(int id);
+    void showSmsListView(std::vector<Sms> smsVector) override;
+    void showSmsView(Sms sms) override;
 
 private:
-    IOrm<Sms>& smsRepository;
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
-
+    std::vector<int> ids;
     void setMenuCallbacks(IUeGui::IListViewMode& menu);
 };
 

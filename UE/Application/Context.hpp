@@ -2,7 +2,7 @@
 
 #include "IEventsHandler.hpp"
 #include "Logger/ILogger.hpp"
-#include "Database/Repository/SmsOrm.hpp"
+#include "Ports/ISmsDatabasePort.hpp"
 
 namespace ue
 {
@@ -13,7 +13,7 @@ struct Context
     IBtsPort& bts;
     IUserPort& user;
     ITimerPort& timer;
-    IOrm<Sms>& sms;
+    ISmsDatabasePort& database;
     std::unique_ptr<IEventsHandler> state{};
     template <typename State, typename ...Arg>
     void setState(Arg&& ...arg)

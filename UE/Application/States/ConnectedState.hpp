@@ -14,6 +14,10 @@ public:
 
     void handleDisconnected() override;
     void handleSendMsg(common::PhoneNumber receiver, std::string content) final;
+
+    void handleGetAllSmsBySent(bool) override;
+    void handleGetSmsById(int id) override;
+    virtual void handleUpdateSms(Sms sms) override;
 };
 
 }
