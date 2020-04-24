@@ -92,14 +92,12 @@ struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 TEST_F(ApplicationConnectedTestSuite, shallShowConnectedOnAttachAccept)
 {
   // Implemented in constructor of test suite
-
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedOnDisconect){
     EXPECT_CALL(userPortMock, showNotConnected());
     objectUnderTest.handleDisconnected();
 }
-
 
 TEST_F(ApplicationConnectedTestSuite, shallSendMsg) {
     PhoneNumber phone = PhoneNumber{115};
@@ -113,7 +111,6 @@ TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
 {
     auto phoneNumber = common::PhoneNumber{111};
     auto message = "message";
-
     EXPECT_CALL(smsDatabasePortMock, saveSms(message, phoneNumber, false, false));
     EXPECT_CALL(userPortMock, showReceivedSmsNotification);
     objectUnderTest.handleSmsReceived(phoneNumber, message);
@@ -121,3 +118,4 @@ TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
 
 
 }
+

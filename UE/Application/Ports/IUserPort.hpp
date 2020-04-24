@@ -24,12 +24,9 @@ public:
     virtual void showNotConnected() = 0;
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
-<<<<<<< Updated upstream
     virtual void showReceivedSmsNotification() = 0;
-=======
     virtual void showSmsListView(std::vector<Sms>) = 0;
     virtual void showSmsView(Sms) = 0;
->>>>>>> Stashed changes
 };
 
 }

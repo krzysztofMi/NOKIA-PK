@@ -14,18 +14,8 @@ ConnectedState::ConnectedState(Context &context)
 void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber, 
                                        std::string msg)
 {
-<<<<<<< Updated upstream
-    Sms incomingSms;
-    incomingSms.phoneNumber = phoneNumber.value;
-    incomingSms.text = msg;
-    incomingSms.read = false;
-    incomingSms.sent = false;
-
-    context.sms.insert(incomingSms);   
-    context.user.showReceivedSmsNotification();
-=======
     context.database.saveSms(msg, phoneNumber, false, false);
->>>>>>> Stashed changes
+    context.user.showReceivedSmsNotification();
 }
 
 void ConnectedState::handleDisconnected(){

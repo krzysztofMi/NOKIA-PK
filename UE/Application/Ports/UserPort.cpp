@@ -61,48 +61,6 @@ void UserPort::showComposeSms(){
 
 void UserPort::showSmsListView(std::vector<Sms> smsVector){
     IUeGui::IListViewMode& smsListView = gui.setListViewMode();
-<<<<<<< Updated upstream
-
-
-    std::vector<Sms> tablica = smsRepository.getAll();
-    int smsFromDatabase;
-    for (int i = 0; i < tablica.size(); i++) {
-        if(tablica.at(i).sent==true){
-            smsFromDatabase=tablica.at(i).phoneNumber;
-            std::string str= std::to_string(smsFromDatabase);
-            smsListView.addSelectionListItem(str, "");
-            gui.setAcceptCallback([&](){
-                smsView(smsListView.getCurrentItemIndex().second+1);
-
-                });
-            gui.setRejectCallback([&](){
-                showConnected();
-            });
-        }
-    }
-}
-
-void UserPort::showSmsListViewSent(){
-    IUeGui::IListViewMode& smsListView = gui.setListViewMode();
-
-
-    std::vector<Sms> tablica = smsRepository.getAll();
-    int smsFromDatabase;
-    for (int i = 0; i < tablica.size(); i++) {
-        if(tablica.at(i).sent==false){
-            smsFromDatabase=tablica.at(i).phoneNumber;
-            std::string str= std::to_string(smsFromDatabase);
-            smsListView.addSelectionListItem(str, "");
-            gui.setAcceptCallback([&](){
-                smsView(smsListView.getCurrentItemIndex().second+1);
-
-                });
-            gui.setRejectCallback([&](){
-                showConnected();
-            });
-        }
-    }
-=======
     ids.clear();
     smsListView.clearSelectionList();
     for(auto sms: smsVector){
@@ -120,7 +78,6 @@ void UserPort::showSmsListViewSent(){
 void UserPort::showSmsView(Sms sms){
     IUeGui::ITextMode& view = gui.setViewTextMode();
     view.setText(sms.text);
->>>>>>> Stashed changes
 }
 
 void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
@@ -139,13 +96,9 @@ void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
     });
 }
 
-<<<<<<< Updated upstream
 void UserPort::showReceivedSmsNotification()
 {
     gui.showNewSms();
 }
-
-=======
->>>>>>> Stashed changes
 }
 
