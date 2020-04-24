@@ -50,6 +50,8 @@ void UserPort::showConnected()
 
 void UserPort::showComposeSms(){
     IUeGui::ISmsComposeMode& composeSms = gui.setSmsComposeMode();
+
+    //Callbacks
     gui.setAcceptCallback([&](){
         handler->handleSendMsg(composeSms.getPhoneNumber(),composeSms.getSmsText());
         composeSms.clearSmsText();
@@ -67,6 +69,7 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
         smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
         ids.push_back(sms.id);
     }
+    //Callbacks
     gui.setAcceptCallback([&](){
         handler->handleGetSmsById(ids.at(smsListView.getCurrentItemIndex().second));
     });
@@ -78,6 +81,19 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
 void UserPort::showSmsView(Sms sms){
     IUeGui::ITextMode& view = gui.setViewTextMode();
     view.setText(sms.text);
+
+    //Callbacks
+    gui.setAcceptCallback([&]{});
+    gui.setRejectCallback([&]{
+        switch(previousView){
+            case View::SMS_RECEIVED:
+                handler->handleGetAllSmsBySent(false);
+                break;
+            case View::SMS_SENT:
+                handler->handleGetAllSmsBySent(true);
+                break;
+        }
+    });
 }
 
 void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
@@ -87,9 +103,11 @@ void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
                 showComposeSms();
                 break;
             case 1:
+                previousView = View::SMS_RECEIVED;
                 handler->handleGetAllSmsBySent(false);
                 break;
             case 2:
+                previousView = View::SMS_SENT;
                 handler->handleGetAllSmsBySent(true);
                 break;
         }

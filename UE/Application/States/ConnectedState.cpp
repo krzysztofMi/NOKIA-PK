@@ -10,7 +10,6 @@ ConnectedState::ConnectedState(Context &context)
     context.user.showConnected();
 }
 
-
 void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber, 
                                        std::string msg)
 {

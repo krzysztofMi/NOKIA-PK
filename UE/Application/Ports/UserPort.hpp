@@ -9,6 +9,8 @@
 namespace ue
 {
 
+enum class View{SMS_SENT, SMS_RECEIVED};
+
 class UserPort : public IUserPort
 {
 public:
@@ -34,6 +36,7 @@ private:
     IUserEventsHandler* handler = nullptr;
     std::vector<int> ids;
     void setMenuCallbacks(IUeGui::IListViewMode& menu);
+    View previousView;
 };
 
 }
