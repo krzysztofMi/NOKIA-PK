@@ -9,10 +9,7 @@ generated/
 CMakeCache.txt
 build/
 images/
-UE
-BTS
 *.a
-COMMON_UT
-
+*.db
 # QtCreator CMake
 CMakeLists.txt.user*
