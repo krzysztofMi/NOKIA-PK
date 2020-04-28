@@ -13,7 +13,8 @@ public:
     virtual void handleSendMsg(common::PhoneNumber receiver, std::string content) = 0;
     virtual void handleGetSmsById(int id) = 0;
     virtual void handleGetAllSmsBySent(bool sent) = 0;
-    virtual void handleUpdateSms(Sms sms) = 0;
+    virtual void handleUpdateSms(Sms) = 0;
+    virtual void handleCallResponse(common::PhoneNumber, bool pass) = 0;
 };
 
 class IUserPort

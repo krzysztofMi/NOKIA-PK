@@ -20,6 +20,7 @@ public:
     void handleUpdateSms(Sms sms) final;
 
     void handleCallRequest(common::PhoneNumber phoneNumber) final;
+    void handleCallResponse(common::PhoneNumber phoneNumber, bool pass) final;
 };
 
 }

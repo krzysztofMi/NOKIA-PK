@@ -20,6 +20,7 @@ protected:
     StrictMock<IUserEventsHandlerMock> handlerMock;
     StrictMock<IUeGuiMock> guiMock;
     StrictMock<IListViewModeMock> listViewModeMock;
+    StrictMock<ITextModeMock> textViewModeMock;
     StrictMock<ISmsDatabasePortMock> smsDatabaseMock;
     UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
 
@@ -58,6 +59,16 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
     EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(1));
     EXPECT_CALL(guiMock, setAcceptCallback);
     objectUnderTest.showConnected();
+}
+
+TEST_F(UserPortTestSuite, shallShowRequestCallViewOnRequestCall)
+{
+    auto phoneNumber = common::PhoneNumber{100};
+    EXPECT_CALL(guiMock, setAlertMode()).WillOnce(ReturnRef(textViewModeMock));
+    EXPECT_CALL(textViewModeMock, setText("New call\n100"));
+    EXPECT_CALL(guiMock, setAcceptCallback);
+    EXPECT_CALL(guiMock, setRejectCallback);
+    objectUnderTest.showRequestCallView(phoneNumber);
 }
 
 }

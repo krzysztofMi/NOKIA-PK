@@ -46,4 +46,8 @@ void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
     context.user.showRequestCallView(phoneNumber);
 }
 
+void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
+
+}
+
 }

@@ -17,6 +17,7 @@ public:
     MOCK_METHOD(void, handleGetAllSmsBySent, (bool), (final));
     MOCK_METHOD(void, handleGetSmsById, (int), (final));
     MOCK_METHOD(void, handleUpdateSms, (Sms), (final));
+    MOCK_METHOD(void, handleCallResponse, (common::PhoneNumber, bool), (final));
 };
 
 class IUserPortMock : public IUserPort

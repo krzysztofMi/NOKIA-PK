@@ -38,6 +38,8 @@ public:
     void handleGetSmsById(int id) override;
     void handleGetAllSmsBySent(bool sent) override;
     void handleUpdateSms(Sms sms) override;
+    void handleCallResponse(common::PhoneNumber, bool pass) override;
+
 private:
     Context context;
     common::PrefixedLogger logger;

@@ -29,6 +29,7 @@ public:
     void handleGetAllSmsBySent(bool sent) override;
     void handleGetSmsById(int id) override;
     void handleUpdateSms(Sms sms) override;
+    void handleCallResponse(common::PhoneNumber, bool pass) override;
 
 protected:
     Context& context;
