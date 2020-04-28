@@ -118,5 +118,10 @@ void UserPort::showReceivedSmsNotification()
 {
     gui.showNewSms();
 }
+
+void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
+
+}
+
 }
 

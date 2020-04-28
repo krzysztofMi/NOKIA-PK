@@ -116,6 +116,13 @@ TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
     objectUnderTest.handleSmsReceived(phoneNumber, message);
 }
 
-
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    using namespace std::chrono_literals;
+    auto phoneNumber = common::PhoneNumber{111};
+    EXPECT_CALL(userPortMock, showRequestCallView(phoneNumber));
+    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    objectUnderTest.handleCallRequest(phoneNumber);
+}
 }
 
