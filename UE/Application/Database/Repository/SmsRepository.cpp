@@ -1,14 +1,11 @@
 #include "SmsRepository.hpp"
 
-
-
 namespace ue {
 
 SmsRepository::SmsRepository(
         common::ILogger& logger,
         std::string path
         ): Orm{logger, "[DATABASE-SMS]", initStorage(path)}{
-
 }
 SmsRepository::~SmsRepository(){}
 

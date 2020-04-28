@@ -7,12 +7,10 @@
 namespace ue {
 
 struct Sms{
+
     Sms(){}
-    Sms(std::string text, uint8_t phoneNumber, bool read, bool sent):
-        text{text},
-        phoneNumber{phoneNumber},
-        read{read},
-        sent{sent}{}
+    Sms(std::string text, uint8_t phoneNumber, bool read, bool sent);
+
     int id;
     std::string text;
     uint8_t phoneNumber;

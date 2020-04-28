@@ -7,6 +7,12 @@ std::string Sms::getEntityName(){
     return "Sms";
 }
 
+Sms::Sms(std::string text, uint8_t phoneNumber, bool read, bool sent) :
+    text{text},
+    phoneNumber{phoneNumber},
+    read{read},
+    sent{sent} {}
+
 bool operator== (const Sms &s1, const Sms &s2)
 {
     return (s1.id == s2.id && 

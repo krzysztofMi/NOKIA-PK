@@ -34,9 +34,9 @@ public:
 
     // IUserPortHandler interface
     void handleSendMsg(common::PhoneNumber receiver, std::string content) override;
-    virtual void handleGetSmsById(int id) override;
-    virtual void handleGetAllSmsBySent(bool sent) override;
-    virtual void handleUpdateSms(Sms sms) override;
+    void handleGetSmsById(int id) override;
+    void handleGetAllSmsBySent(bool sent) override;
+    void handleUpdateSms(Sms sms) override;
 private:
     Context context;
     common::PrefixedLogger logger;
