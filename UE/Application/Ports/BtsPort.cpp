@@ -100,7 +100,12 @@ void BtsPort::sendMsg(common::PhoneNumber receiver, std::string content) {
     transport.sendMessage(msg.getMessage());
 }
 
-void BtsPort::sendCallResponse(common::PhoneNumber, bool) {
-
+void BtsPort::sendCallResponse(common::PhoneNumber receiver, bool pass) {
+    logger.logDebug("Send call response:", receiver, pass);
+    auto messageId = pass ? common::MessageId::CallAccepted : common::MessageId::CallDropped;
+    common::OutgoingMessage msg {
+        messageId, phoneNumber, receiver
+    };
+    transport.sendMessage(msg.getMessage());
 }
 }
