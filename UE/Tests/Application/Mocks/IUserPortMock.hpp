@@ -33,6 +33,7 @@ public:
     MOCK_METHOD(void, showSmsListView, (std::vector<Sms>), (final));
     MOCK_METHOD(void, showSmsView, (Sms), (final));
     MOCK_METHOD(void, showRequestCallView, (common::PhoneNumber), (final));
+    MOCK_METHOD(void, showCallView, (), (final));
 };
 
 }

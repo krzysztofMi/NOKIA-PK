@@ -130,5 +130,9 @@ void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
     });
 }
 
+void UserPort::showCallView(){
+    IUeGui::ICallMode&  callView = gui.setCallMode();
+}
+
 }
 

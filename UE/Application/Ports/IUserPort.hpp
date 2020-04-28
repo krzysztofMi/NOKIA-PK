@@ -29,6 +29,7 @@ public:
     virtual void showSmsListView(std::vector<Sms>) = 0;
     virtual void showSmsView(Sms) = 0;
     virtual void showRequestCallView(common::PhoneNumber phoneNumber) = 0;
+    virtual void showCallView() = 0;
 };
 
 }

@@ -99,4 +99,8 @@ void BtsPort::sendMsg(common::PhoneNumber receiver, std::string content) {
     msg.writeText(content);
     transport.sendMessage(msg.getMessage());
 }
+
+void BtsPort::sendCallResponse(common::PhoneNumber, bool) {
+
+}
 }
