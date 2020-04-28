@@ -124,14 +124,6 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
     objectUnderTest.handleCallRequest(FROM);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccept)
-{
-    EXPECT_CALL(btsPortMock, sendCallResponse(FROM, true));
-    EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock, showCallView());
-    objectUnderTest.handleCallResponse(FROM, true);
-}
-
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallReject)
 {
     EXPECT_CALL(btsPortMock, sendCallResponse(FROM, false));
@@ -139,5 +131,21 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallReject)
     EXPECT_CALL(userPortMock, showMenuView());
     objectUnderTest.handleCallResponse(FROM, false);
 }
+
+struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
+{
+    ApplicationTalkingTestSuite(){
+        EXPECT_CALL(btsPortMock, sendCallResponse(FROM, true));
+        EXPECT_CALL(timerPortMock, stopTimer());
+        EXPECT_CALL(userPortMock, showCallView());
+        objectUnderTest.handleCallResponse(FROM, true);
+    }
+};
+
+TEST_F(ApplicationTalkingTestSuite, shallHandleCallAccept)
+{
+    //Implemented in ApplicationTalkingTestSuite constructor
+}
+
 }
 

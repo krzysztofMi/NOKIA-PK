@@ -1,5 +1,6 @@
 #include "ConnectedState.hpp"
 #include "NotConnectedState.hpp"
+#include "TalkingState.hpp"
 
 namespace ue
 {
@@ -50,7 +51,7 @@ void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
 void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
     context.bts.sendCallResponse(phoneNumber, pass);
     if(pass){
-        context.user.showCallView();
+        context.setState<TalkingState>();
     }else{
         context.user.showMenuView();
     }
