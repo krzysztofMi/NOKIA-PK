@@ -51,17 +51,22 @@ TEST_F(UserPortTestSuite, shallShowConnecting)
     objectUnderTest.showConnecting();
 }
 
-TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
+TEST_F(UserPortTestSuite, shallShowConnected)
 {
     EXPECT_CALL(guiMock, showConnected());
+    objectUnderTest.showConnected();
+}
+
+TEST_F(UserPortTestSuite, shallShowMenu)
+{
     EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
     EXPECT_CALL(listViewModeMock, clearSelectionList());
     EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(1));
     EXPECT_CALL(guiMock, setAcceptCallback);
-    objectUnderTest.showConnected();
+    objectUnderTest.showMenuView();
 }
 
-TEST_F(UserPortTestSuite, shallShowRequestCallViewOnRequestCall)
+TEST_F(UserPortTestSuite, shallShowRequestCallView)
 {
     auto phoneNumber = common::PhoneNumber{100};
     EXPECT_CALL(guiMock, setAlertMode()).WillOnce(ReturnRef(textViewModeMock));

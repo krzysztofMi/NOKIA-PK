@@ -8,6 +8,7 @@ ConnectedState::ConnectedState(Context &context)
     : BaseState(context, "ConnectedState")
 {
     context.user.showConnected();
+    context.user.showMenuView();
 }
 
 void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber, 
@@ -48,8 +49,12 @@ void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
 
 void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
     context.bts.sendCallResponse(phoneNumber, pass);
+    if(pass){
+        context.user.showCallView();
+    }else{
+        context.user.showMenuView();
+    }
     context.timer.stopTimer();
-    context.user.showCallView();
 }
 
 }

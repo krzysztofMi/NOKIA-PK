@@ -85,6 +85,7 @@ struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
     ApplicationConnectedTestSuite()
     {
         EXPECT_CALL(userPortMock, showConnected());
+        EXPECT_CALL(userPortMock, showMenuView());
         EXPECT_CALL(timerPortMock, stopTimer());
         objectUnderTest.handleAttachAccept();
     }
@@ -129,6 +130,14 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccept)
     EXPECT_CALL(timerPortMock, stopTimer());
     EXPECT_CALL(userPortMock, showCallView());
     objectUnderTest.handleCallResponse(FROM, true);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallReject)
+{
+    EXPECT_CALL(btsPortMock, sendCallResponse(FROM, false));
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showMenuView());
+    objectUnderTest.handleCallResponse(FROM, false);
 }
 }
 

@@ -24,6 +24,7 @@ public:
 
     virtual void showNotConnected() = 0;
     virtual void showConnecting() = 0;
+    virtual void showMenuView() = 0;
     virtual void showConnected() = 0;
     virtual void showReceivedSmsNotification() = 0;
     virtual void showSmsListView(std::vector<Sms>) = 0;

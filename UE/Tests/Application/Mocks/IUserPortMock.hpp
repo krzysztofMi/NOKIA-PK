@@ -29,6 +29,7 @@ public:
     MOCK_METHOD(void, showNotConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showConnected, (), (final));
+    MOCK_METHOD(void, showMenuView, (), (final));
     MOCK_METHOD(void, showReceivedSmsNotification, (), (final));
     MOCK_METHOD(void, showSmsListView, (std::vector<Sms>), (final));
     MOCK_METHOD(void, showSmsView, (Sms), (final));
