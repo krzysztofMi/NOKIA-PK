@@ -125,4 +125,14 @@ TEST_F(BtsPortTestSuite, shallSendMsg)
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
 
+TEST_F(BtsPortTestSuite, shallHandleCallRequest)
+{
+    auto phoneNumber = common::PhoneNumber{100};
+    EXPECT_CALL(handlerMock, handleCallRequest(phoneNumber));
+    common::OutgoingMessage message{common::MessageId::CallRequest,
+                                common::PhoneNumber{100},
+                                PHONE_NUMBER};
+    messageCallback(message.getMessage());
+}
+
 }

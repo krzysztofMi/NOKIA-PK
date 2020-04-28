@@ -40,4 +40,8 @@ void ConnectedState::handleUpdateSms(Sms sms){
     context.database.updateSms(sms);
 }
 
+void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
+
+}
+
 }

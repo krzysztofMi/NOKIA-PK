@@ -65,4 +65,9 @@ void BaseState::handleUpdateSms(Sms sms)
    logger.logError("Unexpected handleUpdateSms", sms.phoneNumber, sms.text);
 }
 
+void BaseState::handleCallRequest(common::PhoneNumber phoneNumber)
+{
+    logger.logError("Unexpected handleCallRequest", phoneNumber);
+}
+
 }

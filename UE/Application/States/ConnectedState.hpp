@@ -18,6 +18,8 @@ public:
     void handleGetAllSmsBySent(bool) final;
     void handleGetSmsById(int id) final;
     void handleUpdateSms(Sms sms) final;
+
+    void handleCallRequest(common::PhoneNumber phoneNumber) final;
 };
 
 }
