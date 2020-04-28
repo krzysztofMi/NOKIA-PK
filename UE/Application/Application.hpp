@@ -4,7 +4,6 @@
 #include "Messages/PhoneNumber.hpp"
 #include "IEventsHandler.hpp"
 #include "Context.hpp"
-#include "Database/Repository/SmsOrm.hpp"
 
 namespace ue
 {
@@ -20,7 +19,7 @@ public:
                 IBtsPort& bts,
                 IUserPort& user,
                 ITimerPort& timer,
-                IOrm<Sms>& smsRepository);
+                ISmsDatabasePort& database);
     ~Application();
 
     // ITimerEventsHandler interface
@@ -32,8 +31,12 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
     void handleSmsReceived(common::PhoneNumber PhoneNumber, std::string msg) override;
-    void handleSendMsg(common::PhoneNumber receiver, std::string content) override;
 
+    // IUserPortHandler interface
+    void handleSendMsg(common::PhoneNumber receiver, std::string content) override;
+    void handleGetSmsById(int id) override;
+    void handleGetAllSmsBySent(bool sent) override;
+    void handleUpdateSms(Sms sms) override;
 private:
     Context context;
     common::PrefixedLogger logger;

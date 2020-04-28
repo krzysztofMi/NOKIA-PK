@@ -9,8 +9,8 @@ Application::Application(common::PhoneNumber phoneNumber,
                          IBtsPort &bts,
                          IUserPort &user,
                          ITimerPort &timer,
-                         IOrm<Sms> &smsRepository)
-    : context{iLogger, bts, user, timer, smsRepository},
+                         ISmsDatabasePort &database)
+    : context{iLogger, bts, user, timer, database},
       logger(iLogger, "[APP] ")
 {
     logger.logInfo("Started");
@@ -54,5 +54,17 @@ void Application::handleSmsReceived(common::PhoneNumber from, std::string messag
 
 void Application::handleSendMsg(common::PhoneNumber receiver, std::string content) {
     context.state->handleSendMsg(receiver, content);
+}
+
+void Application::handleGetAllSmsBySent(bool sent){
+    context.state->handleGetAllSmsBySent(sent);
+}
+
+void Application::handleGetSmsById(int id){
+    context.state->handleGetSmsById(id);
+}
+
+void Application::handleUpdateSms(Sms sms){
+    context.state->handleUpdateSms(sms);
 }
 }
