@@ -20,9 +20,10 @@ void ConnectingState::handleAttachReject(){
     context.setState<NotConnectedState>();
 }
 
-void ConnectingState::handleTimeout(){
+void ConnectingState::handleTimeout(common::PhoneNumber phoneNumber){
     context.logger.logError("timeout");
-    context.setState<NotConnectedState>();
+    context.user.showMenuView();
+    context.bts.sendCallResponse(phoneNumber,0);
 }
 
 void ConnectingState::handleAttachAccept()

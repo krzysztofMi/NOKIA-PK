@@ -16,7 +16,7 @@ public:
     void stop();
 
     // ITimerPort interface
-    void startTimer(const Duration duration) override;
+    void startTimer(const Duration duration, common::PhoneNumber phoneNumber) override;
     void stopTimer() override;
 
 private:
@@ -24,7 +24,7 @@ private:
     ITimerEventsHandler* handler = nullptr;
     std::thread timerThread;
 
-    void waitForTimeout(const Duration duration) const;
+    void waitForTimeout(const Duration duration, common::PhoneNumber phoneNumber) const;
 };
 
 }

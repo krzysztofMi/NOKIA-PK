@@ -1,4 +1,5 @@
 #include "TimerPort.hpp"
+#include "Messages/PhoneNumber.hpp"
 
 namespace ue
 {
@@ -22,10 +23,10 @@ void TimerPort::stop()
     }
 }
 
-void TimerPort::startTimer(const Duration duration)
+void TimerPort::startTimer(const Duration duration, common::PhoneNumber phoneNumber)
 {
     logger.logDebug("Start timer: ", duration.count(), "ms");
-    timerThread = std::thread {&TimerPort::waitForTimeout, this, duration};
+    timerThread = std::thread {&TimerPort::waitForTimeout, this, (duration, phoneNumber)};
 }
 
 void TimerPort::stopTimer()
@@ -34,10 +35,10 @@ void TimerPort::stopTimer()
     logger.logDebug("Stop timer");
 }
 
-void TimerPort::waitForTimeout(Duration duration) const
+void TimerPort::waitForTimeout(Duration duration, common::PhoneNumber phoneNumber) const
 {
     std::this_thread::sleep_for(duration);
-    handler->handleTimeout();
+    handler->handleTimeout(phoneNumber);
 }
 
 }
