@@ -1,5 +1,6 @@
 #pragma once
 
+#include <thread>
 #include "ITimerPort.hpp"
 #include "Logger/PrefixedLogger.hpp"
 
@@ -15,12 +16,15 @@ public:
     void stop();
 
     // ITimerPort interface
-    void startTimer(Duration duration) override;
+    void startTimer(const Duration duration) override;
     void stopTimer() override;
 
 private:
     common::PrefixedLogger logger;
     ITimerEventsHandler* handler = nullptr;
+    std::thread timerThread;
+
+    void waitForTimeout(const Duration duration) const;
 };
 
 }
