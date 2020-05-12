@@ -14,7 +14,7 @@ public:
     ~BaseState() override;
 
     // ITimerEventsHandler interface
-    void handleTimeout() override;
+    void handleTimeout(common::PhoneNumber phoneNumber) override;
 
     // IBtsEventsHandler interface
     void handleDisconnected() override;

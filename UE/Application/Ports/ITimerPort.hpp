@@ -10,7 +10,7 @@ class ITimerEventsHandler
 public:
     virtual ~ITimerEventsHandler() = default;
 
-    virtual void handleTimeout() = 0;
+    virtual void handleTimeout(common::PhoneNumber phoneNumber) = 0;
 };
 
 class ITimerPort
