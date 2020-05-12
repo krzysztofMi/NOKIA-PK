@@ -24,6 +24,7 @@ public:
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
+    void handleCallTimeout(common::PhoneNumber phoneNumber) override;
 
     // IBtsEventsHandler interface
     void handleDisconnected() override;
