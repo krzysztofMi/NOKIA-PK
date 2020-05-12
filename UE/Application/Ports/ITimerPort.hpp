@@ -20,7 +20,7 @@ public:
 
     virtual ~ITimerPort() = default;
 
-    virtual void startTimer(Duration) = 0;
+    virtual void startTimer(const Duration) = 0;
     virtual void stopTimer() = 0;
 };
 
