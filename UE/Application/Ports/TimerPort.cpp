@@ -44,7 +44,7 @@ void TimerPort::waitForTimeout(Duration duration) const
 void TimerPort::waitForCallTimeout(Duration duration, common::PhoneNumber phoneNumber) const
 {
     std::this_thread::sleep_for(duration);
-    handler->handleTimeout(phoneNumber);
+    handler->handleCallTimeout(phoneNumber);
 }
 
 }
