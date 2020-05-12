@@ -67,4 +67,12 @@ void Application::handleGetSmsById(int id){
 void Application::handleUpdateSms(Sms sms){
     context.state->handleUpdateSms(sms);
 }
+
+void Application::handleCallRequest(common::PhoneNumber phoneNumber){
+    context.state->handleCallRequest(phoneNumber);
+}
+
+void Application::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
+    context.state->handleCallResponse(phoneNumber, pass);
+}
 }

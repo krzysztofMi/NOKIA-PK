@@ -16,30 +16,28 @@ UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber pho
       phoneNumber(phoneNumber)
 {}
 
-void UserPort::start(IUserEventsHandler &handler)
-{
+void UserPort::start(IUserEventsHandler &handler){
     this->handler = &handler;
     gui.setTitle("Nokia " + to_string(phoneNumber));
 }
 
-void UserPort::stop()
-{
+void UserPort::stop(){
     handler = nullptr;
 }
 
-void UserPort::showNotConnected()
-{
+void UserPort::showNotConnected(){
     gui.showNotConnected();
 }
 
-void UserPort::showConnecting()
-{
+void UserPort::showConnecting(){
     gui.showConnecting();
 }
 
-void UserPort::showConnected()
-{
+void UserPort::showConnected(){
     gui.showConnected();
+}
+
+void UserPort::showMenuView(){
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
@@ -57,7 +55,7 @@ void UserPort::showComposeSms(){
         composeSms.clearSmsText();
     });
     gui.setRejectCallback([&](){
-        showConnected();
+        showMenuView();
     });
 }
 
@@ -74,7 +72,7 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
         handler->handleGetSmsById(ids.at(smsListView.getCurrentItemIndex().second));
     });
     gui.setRejectCallback([&](){
-        showConnected();
+        showMenuView();
     });
 }
 
@@ -118,5 +116,21 @@ void UserPort::showReceivedSmsNotification()
 {
     gui.showNewSms();
 }
+
+void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
+    IUeGui::ITextMode& newCallView = gui.setAlertMode();
+    newCallView.setText("New call\n" + std::to_string(phoneNumber.value));
+    gui.setAcceptCallback([&, phoneNumber]{
+        handler->handleCallResponse(phoneNumber, true);
+    });
+    gui.setRejectCallback([&, phoneNumber]{
+        handler->handleCallResponse(phoneNumber, false);
+    });
+}
+
+void UserPort::showCallView(){
+    IUeGui::ICallMode&  callView = gui.setCallMode();
+}
+
 }
 

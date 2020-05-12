@@ -28,6 +28,9 @@ public:
     void showComposeSms();
     void showSmsListView(std::vector<Sms> smsVector) override;
     void showSmsView(Sms sms) override;
+    void showRequestCallView(common::PhoneNumber phoneNumber) override;
+    void showCallView() override;
+    void showMenuView() override;
 
 private:
     common::PrefixedLogger logger;

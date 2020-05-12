@@ -18,6 +18,7 @@ class ApplicationTestSuite : public Test
 {
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
+    const common::PhoneNumber FROM{100};
     const common::BtsId BTS_ID{203};
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IBtsPortMock> btsPortMock;
@@ -84,6 +85,7 @@ struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
     ApplicationConnectedTestSuite()
     {
         EXPECT_CALL(userPortMock, showConnected());
+        EXPECT_CALL(userPortMock, showMenuView());
         EXPECT_CALL(timerPortMock, stopTimer());
         objectUnderTest.handleAttachAccept();
     }
@@ -100,22 +102,50 @@ TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedOnDisconect){
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallSendMsg) {
-    PhoneNumber phone = PhoneNumber{115};
     std::string message = "test";
-    EXPECT_CALL(btsPortMock, sendMsg(phone, message));
-    EXPECT_CALL(smsDatabasePortMock, saveSms(message, phone, true, true));
-    objectUnderTest.handleSendMsg(phone, message);
+    EXPECT_CALL(btsPortMock, sendMsg(FROM, message));
+    EXPECT_CALL(smsDatabasePortMock, saveSms(message, FROM, true, true));
+    objectUnderTest.handleSendMsg(FROM, message);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
 {
-    auto phoneNumber = common::PhoneNumber{111};
     auto message = "message";
-    EXPECT_CALL(smsDatabasePortMock, saveSms(message, phoneNumber, false, false));
+    EXPECT_CALL(smsDatabasePortMock, saveSms(message, FROM, false, false));
     EXPECT_CALL(userPortMock, showReceivedSmsNotification);
-    objectUnderTest.handleSmsReceived(phoneNumber, message);
+    objectUnderTest.handleSmsReceived(FROM, message);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    using namespace std::chrono_literals;
+    EXPECT_CALL(userPortMock, showRequestCallView(FROM));
+    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    objectUnderTest.handleCallRequest(FROM);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallReject)
+{
+    EXPECT_CALL(btsPortMock, sendCallResponse(FROM, false));
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showMenuView());
+    objectUnderTest.handleCallResponse(FROM, false);
+}
+
+struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
+{
+    ApplicationTalkingTestSuite(){
+        EXPECT_CALL(btsPortMock, sendCallResponse(FROM, true));
+        EXPECT_CALL(timerPortMock, stopTimer());
+        EXPECT_CALL(userPortMock, showCallView());
+        objectUnderTest.handleCallResponse(FROM, true);
+    }
+};
+
+TEST_F(ApplicationTalkingTestSuite, shallHandleCallAccept)
+{
+    //Implemented in ApplicationTalkingTestSuite constructor
+}
 
 }
 

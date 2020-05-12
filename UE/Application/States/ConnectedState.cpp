@@ -1,5 +1,6 @@
 #include "ConnectedState.hpp"
 #include "NotConnectedState.hpp"
+#include "TalkingState.hpp"
 
 namespace ue
 {
@@ -8,6 +9,7 @@ ConnectedState::ConnectedState(Context &context)
     : BaseState(context, "ConnectedState")
 {
     context.user.showConnected();
+    context.user.showMenuView();
 }
 
 void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber, 
@@ -38,6 +40,22 @@ void ConnectedState::handleGetSmsById(int id){
 
 void ConnectedState::handleUpdateSms(Sms sms){
     context.database.updateSms(sms);
+}
+
+void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
+    using namespace std::chrono_literals;
+    context.timer.startTimer(30000ms);
+    context.user.showRequestCallView(phoneNumber);
+}
+
+void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
+    context.bts.sendCallResponse(phoneNumber, pass);
+    if(pass){
+        context.setState<TalkingState>();
+    }else{
+        context.user.showMenuView();
+    }
+    context.timer.stopTimer();
 }
 
 }
