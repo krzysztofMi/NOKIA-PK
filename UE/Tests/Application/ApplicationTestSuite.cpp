@@ -120,7 +120,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
 {
     using namespace std::chrono_literals;
     EXPECT_CALL(userPortMock, showRequestCallView(FROM));
-    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    EXPECT_CALL(timerPortMock, startCallTimer(30000ms, FROM));
     objectUnderTest.handleCallRequest(FROM);
 }
 
