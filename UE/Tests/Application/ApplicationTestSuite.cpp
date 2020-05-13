@@ -74,6 +74,13 @@ TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnTimeout)
     objectUnderTest.handleTimeout();
 }
 
+TEST_F(ApplicationConnectingTestSuite, shallHandleCallTimeout)
+{
+    EXPECT_CALL(btsPortMock, sendCallResponse(FROM, false));
+    EXPECT_CALL(userPortMock, showMenuView());
+    objectUnderTest.handleCallTimeout(FROM);
+}
+
 TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnDisconnect)
 {
     EXPECT_CALL(userPortMock, showNotConnected());
@@ -131,6 +138,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallReject)
     EXPECT_CALL(userPortMock, showMenuView());
     objectUnderTest.handleCallResponse(FROM, false);
 }
+
 
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
 {
