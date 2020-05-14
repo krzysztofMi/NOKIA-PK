@@ -65,12 +65,12 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
     smsListView.clearSelectionList();
     for(auto sms: smsVector){
         if (sms.read == true){
-            smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+            smsListView.addSelectionListItem(std::to_string(sms.phoneNumber),"");
         }
         else{
-            std::string test = std::to_string(sms.phoneNumber);
-            test=test+" Unread";
-            smsListView.addSelectionListItem(test, "");
+            std::string smsStatus = std::to_string(sms.phoneNumber);
+            smsStatus=smsStatus+" Unread";
+            smsListView.addSelectionListItem(smsStatus,"");
 
         }
 
