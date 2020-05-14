@@ -58,4 +58,10 @@ void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pa
     context.timer.stopTimer();
 }
 
+void ConnectedState::handleCallTimeout(common::PhoneNumber phoneNumber){
+    context.logger.logError("timeout");
+    context.user.showMenuView();
+    context.bts.sendCallResponse(phoneNumber, 0);
+}
+
 }

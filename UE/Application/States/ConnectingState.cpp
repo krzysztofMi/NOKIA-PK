@@ -25,12 +25,6 @@ void ConnectingState::handleTimeout(){
     context.setState<NotConnectedState>();
 }
 
-void ConnectingState::handleCallTimeout(common::PhoneNumber phoneNumber){
-    context.logger.logError("timeout");
-    context.user.showMenuView();
-    context.bts.sendCallResponse(phoneNumber, 0);
-}
-
 void ConnectingState::handleAttachAccept()
 {
     context.logger.logInfo("attach accept");

@@ -12,7 +12,6 @@ public:
     ConnectingState(Context& context, common::BtsId btsId);
     void handleAttachReject() override;
     void handleTimeout() override;
-    void handleCallTimeout(common::PhoneNumber phoneNumber) override;
     void handleAttachAccept() override;
     void handleDisconnected() override;
 };

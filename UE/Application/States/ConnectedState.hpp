@@ -21,6 +21,8 @@ public:
 
     void handleCallRequest(common::PhoneNumber phoneNumber) final;
     void handleCallResponse(common::PhoneNumber phoneNumber, bool pass) final;
+
+    void handleCallTimeout(common::PhoneNumber phoneNumber) override;
 };
 
 }
