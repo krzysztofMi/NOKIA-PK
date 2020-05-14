@@ -64,7 +64,9 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
     ids.clear();
     smsListView.clearSelectionList();
     for(auto sms: smsVector){
-        smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+        if(sms.failed) smsListView.addSelectionListItem(std::to_string(sms.phoneNumber)+" Failed", "");
+        else smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+
         ids.push_back(sms.id);
     }
     //Callbacks

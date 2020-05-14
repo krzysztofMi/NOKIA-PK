@@ -14,7 +14,8 @@ inline auto initStorage(const std::string &path){
                                     make_column("text", &Sms::text),
                                     make_column("phone_number", &Sms::phoneNumber),
                                     make_column("read", &Sms::read, default_value(false)),
-                                    make_column("sent", &Sms::sent)
+                                    make_column("sent", &Sms::sent),
+                                    make_column("failed", &Sms::failed, default_value(false))
                                     )
                          );
 }

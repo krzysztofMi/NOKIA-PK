@@ -108,6 +108,12 @@ TEST_F(ApplicationConnectedTestSuite, shallSendMsg) {
     objectUnderTest.handleSendMsg(FROM, message);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallFailedToSendSms) {
+    std::string message = "test";
+    EXPECT_CALL(smsDatabasePortMock, getSmsById(_));
+    objectUnderTest.handleFailedToSendSms();
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
 {
     auto message = "message";
