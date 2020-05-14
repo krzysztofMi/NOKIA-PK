@@ -50,9 +50,9 @@ void BaseState::handleSendMsg(common::PhoneNumber receiver, std::string content)
     logger.logError("Unexpected handleSendMsg", receiver, content);
 }
 
-void BaseState::handleFailedToSendSms(int id)
+void BaseState::handleFailedToSendSms()
 {
-    logger.logError("Unexpected handelFailedToSendSms", id);
+    logger.logError("Unexpected handelFailedToSendSms");
 }
 
 void BaseState::handleGetAllSmsBySent(bool sent)

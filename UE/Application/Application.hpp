@@ -32,7 +32,7 @@ public:
     void handleAttachReject() override;
     void handleSmsReceived(common::PhoneNumber PhoneNumber, std::string msg) override;
     void handleCallRequest(common::PhoneNumber phoneNumber) override;
-    void handleFailedToSendSms(int id) override;
+    void handleFailedToSendSms() override;
 
     // IUserPortHandler interface
     void handleSendMsg(common::PhoneNumber receiver, std::string content) override;

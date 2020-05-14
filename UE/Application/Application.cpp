@@ -52,9 +52,9 @@ void Application::handleSmsReceived(common::PhoneNumber from, std::string messag
     context.state->handleSmsReceived(from, message);
 }
 
-void Application::handleFailedToSendSms(int id)
+void Application::handleFailedToSendSms()
 {
-    context.state->handleFailedToSendSms(id);
+    context.state->handleFailedToSendSms();
 }
 
 void Application::handleSendMsg(common::PhoneNumber receiver, std::string content) {
