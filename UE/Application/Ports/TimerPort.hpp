@@ -19,15 +19,12 @@ public:
     void startTimer(const Duration duration) override;
     void stopTimer() override;
 
-    void startCallTimer(const Duration duration, common::PhoneNumber phoneNumber) override;
-
 private:
     common::PrefixedLogger logger;
     ITimerEventsHandler* handler = nullptr;
     std::thread timerThread;
 
     void waitForTimeout(const Duration duration) const;
-    void waitForCallTimeout(const Duration duration, common::PhoneNumber phoneNumber) const;
 };
 
 }

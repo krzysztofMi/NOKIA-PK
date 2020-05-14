@@ -20,11 +20,6 @@ void BaseState::handleTimeout()
     logger.logError("Uexpected: handleTimeout");
 }
 
-void BaseState::handleCallTimeout(common::PhoneNumber phoneNumber)
-{
-    logger.logError("Uexpected: handleCallTimeout", phoneNumber);
-}
-
 void BaseState::handleDisconnected()
 {
     logger.logError("Uexpected: handleDisconnected()");

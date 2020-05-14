@@ -120,7 +120,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
 {
     using namespace std::chrono_literals;
     EXPECT_CALL(userPortMock, showRequestCallView(FROM));
-    EXPECT_CALL(timerPortMock, startCallTimer(30000ms, FROM));
+    EXPECT_CALL(timerPortMock, startTimer(30000ms));
     objectUnderTest.handleCallRequest(FROM);
 }
 
@@ -134,9 +134,9 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallReject)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
 {
-    EXPECT_CALL(btsPortMock, sendCallResponse(FROM, false));
     EXPECT_CALL(userPortMock, showMenuView());
-    objectUnderTest.handleCallTimeout(FROM);
+    EXPECT_CALL(btsPortMock, sendCallResponse(FROM, false));
+    objectUnderTest.handleTimeout();
 }
 
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite

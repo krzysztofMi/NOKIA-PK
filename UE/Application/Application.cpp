@@ -27,11 +27,6 @@ void Application::handleTimeout()
     context.state->handleTimeout();
 }
 
-void Application::handleCallTimeout(common::PhoneNumber PhoneNumber)
-{
-    context.state->handleCallTimeout(PhoneNumber);
-}
-
 void Application::handleDisconnected()
 {
     context.state->handleDisconnected();

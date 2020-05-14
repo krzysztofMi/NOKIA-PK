@@ -7,6 +7,8 @@ namespace ue
 
 class ConnectedState : public BaseState
 {
+private:
+    common::PhoneNumber currentlyDialedPhoneNumber;
 public:
     ConnectedState(Context& context);
 
@@ -21,8 +23,9 @@ public:
 
     void handleCallRequest(common::PhoneNumber phoneNumber) final;
     void handleCallResponse(common::PhoneNumber phoneNumber, bool pass) final;
+    
+    void handleTimeout() final;
 
-    void handleCallTimeout(common::PhoneNumber phoneNumber) override;
 };
 
 }

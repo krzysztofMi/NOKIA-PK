@@ -14,8 +14,6 @@ public:
     ~ITimerEventsHandlerMock() override;
 
     MOCK_METHOD(void, handleTimeout, (), (final));
-    MOCK_METHOD(void, handleCallTimeout, (common::PhoneNumber), (final));
-
 };
 
 class ITimerPortMock : public ITimerPort
@@ -25,7 +23,6 @@ public:
     ~ITimerPortMock() override;
 
     MOCK_METHOD(void, startTimer, (ITimerPort::Duration), (final));
-    MOCK_METHOD(void, startCallTimer, (ITimerPort::Duration, common::PhoneNumber), (final));
     MOCK_METHOD(void, stopTimer, (), (final));
 };
 

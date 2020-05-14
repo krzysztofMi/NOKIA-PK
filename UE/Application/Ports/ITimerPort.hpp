@@ -12,7 +12,6 @@ public:
     virtual ~ITimerEventsHandler() = default;
 
     virtual void handleTimeout() = 0;
-    virtual void handleCallTimeout(common::PhoneNumber phoneNumber) = 0;
 };
 
 class ITimerPort
@@ -23,7 +22,6 @@ public:
     virtual ~ITimerPort() = default;
 
     virtual void startTimer(const Duration) = 0;
-    virtual void startCallTimer(const Duration, common::PhoneNumber phoneNumber) = 0;
     virtual void stopTimer() = 0;
 };
 

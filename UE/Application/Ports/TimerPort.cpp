@@ -29,12 +29,6 @@ void TimerPort::startTimer(const Duration duration)
     timerThread = std::thread {&TimerPort::waitForTimeout, this, duration};
 }
 
-void TimerPort::startCallTimer(const Duration duration, common::PhoneNumber phoneNumber)
-{
-    logger.logDebug("Start timer: ", duration.count(), "ms");
-    timerThread = std::thread {&TimerPort::waitForCallTimeout, this, duration, phoneNumber};
-}
-
 void TimerPort::stopTimer()
 {
     pthread_cancel(timerThread.native_handle());
@@ -45,12 +39,6 @@ void TimerPort::waitForTimeout(Duration duration) const
 {
     std::this_thread::sleep_for(duration);
     handler->handleTimeout();
-}
-
-void TimerPort::waitForCallTimeout(Duration duration, common::PhoneNumber phoneNumber) const
-{
-    std::this_thread::sleep_for(duration);
-    handler->handleCallTimeout(phoneNumber);
 }
 
 }
