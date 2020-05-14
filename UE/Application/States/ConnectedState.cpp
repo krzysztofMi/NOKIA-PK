@@ -19,6 +19,15 @@ void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber,
     context.user.showReceivedSmsNotification();
 }
 
+void ConnectedState::handleFailedToSendSms()
+{
+    std::unique_ptr<Sms> sms = context.database.getSmsById(lastSmsID);
+    if(sms!=nullptr) {
+        sms->failed = true;
+        context.database.updateSms(*sms.get());
+    }
+}
+
 void ConnectedState::handleDisconnected(){
     logger.logInfo("disconnected");
     context.setState<NotConnectedState>();
@@ -26,7 +35,8 @@ void ConnectedState::handleDisconnected(){
 
 void ConnectedState::handleSendMsg(common::PhoneNumber receiver, std::string content) {
     context.bts.sendMsg(receiver, content);
-    context.database.saveSms(content, receiver, true, true);
+    Sms lastSms = context.database.saveSms(content, receiver, true, true);
+    lastSmsID = lastSms.id;
 }
 
 void ConnectedState::handleGetAllSmsBySent(bool sent){
