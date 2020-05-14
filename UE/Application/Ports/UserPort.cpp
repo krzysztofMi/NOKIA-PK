@@ -64,8 +64,16 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
     ids.clear();
     smsListView.clearSelectionList();
     for(auto sms: smsVector){
-        if(sms.failed) smsListView.addSelectionListItem(std::to_string(sms.phoneNumber)+" Failed", "");
-        else smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+        if (sms.read == true){
+            if(sms.failed) smsListView.addSelectionListItem(std::to_string(sms.phoneNumber)+" Failed", "");
+            else smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+        }
+        else{
+            std::string smsStatus = std::to_string(sms.phoneNumber);
+            smsStatus=smsStatus+" Unread";
+            smsListView.addSelectionListItem(smsStatus,"");
+
+        }
 
         ids.push_back(sms.id);
     }
@@ -81,6 +89,8 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
 void UserPort::showSmsView(Sms sms){
     IUeGui::ITextMode& view = gui.setViewTextMode();
     view.setText(sms.text);
+    sms.read=true;
+    handler->handleUpdateSms(sms);
 
     //Callbacks
     gui.setAcceptCallback([&]{});
@@ -135,4 +145,3 @@ void UserPort::showCallView(){
 }
 
 }
-
