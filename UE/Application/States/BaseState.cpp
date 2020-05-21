@@ -67,7 +67,7 @@ void BaseState::handleGetSmsById(int id)
 
 void BaseState::handleUpdateSms(Sms sms)
 {
-   logger.logError("Unexpected handleUpdateSms", sms.phoneNumber, sms.text);
+    logger.logError("Unexpected handleUpdateSms", sms.phoneNumber, sms.text);
 }
 
 void BaseState::handleCallRequest(common::PhoneNumber phoneNumber)
@@ -93,6 +93,11 @@ void BaseState::handleSendCallRequest(common::PhoneNumber to)
 void BaseState::handleSendTalkMessage(const std::string message)
 {
     logger.logError("Unexpected handleSendTalkMessage", message);
+}
+
+void BaseState::handleTalkMessage(const std::string message)
+{
+    logger.logError("Unexpected handle talk message", message);
 }
 
 }

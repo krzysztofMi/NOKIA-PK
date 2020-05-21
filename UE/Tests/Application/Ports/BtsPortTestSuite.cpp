@@ -194,6 +194,20 @@ TEST_F(BtsPortTestSuite, shallSendTalkMessage)
     ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallTalk, reader.readMessageId()));
     ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
     ASSERT_NO_THROW(EXPECT_EQ(to, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ("Hello world.", reader.readRemainingText()));
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
+
+TEST_F(BtsPortTestSuite, shallReceiveCallTalk)
+{
+    auto phoneNumber = common::PhoneNumber{100};
+    const std::string text{"Ala ma kota"};
+    EXPECT_CALL(handlerMock, handleTalkMessage(text));
+    common::OutgoingMessage message{common::MessageId::CallTalk,
+                                    common::PhoneNumber{100},
+                                    PHONE_NUMBER};
+    message.writeText("Ala ma kota");
+    messageCallback(message.getMessage());
+}
+
 }

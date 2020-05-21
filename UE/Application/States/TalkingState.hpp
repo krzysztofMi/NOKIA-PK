@@ -9,7 +9,7 @@ public:
     TalkingState(Context& context, const common::PhoneNumber from);
 
     void handleSendTalkMessage(const std::string) final;
-
+    void handleTalkMessage(const std::string) final;
 private:
     common::PhoneNumber phone;
 };

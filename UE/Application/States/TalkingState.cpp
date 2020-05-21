@@ -11,7 +11,14 @@ TalkingState::TalkingState(Context& context, const common::PhoneNumber from)
 void TalkingState::handleSendTalkMessage(const std::string message){
     context.timer.stopTimer();
     using namespace std::chrono_literals;
-    context.timer.startTimer(2000ms);
+    context.timer.startTimer(120000ms);
     context.bts.sendTalkMessage(message, phone);
+}
+
+void TalkingState::handleTalkMessage(const std::string message){
+    context.timer.stopTimer();
+    using namespace std::chrono_literals;
+    context.timer.startTimer(120000ms);
+    context.user.showCallView(message);
 }
 }

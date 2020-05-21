@@ -165,6 +165,12 @@ struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
         changeToTalkingState();
         objectUnderTest.handleCallResponse(PHONE_NUMBER, true);
     }
+
+    void prepareTimer(){
+        EXPECT_CALL(timerPortMock, stopTimer());
+        using namespace std::chrono_literals;
+        EXPECT_CALL(timerPortMock, startTimer(120000ms));
+    }
 };
 
 TEST_F(ApplicationTalkingTestSuite, shallHandleCallAccept)
@@ -175,11 +181,16 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleCallAccept)
 TEST_F(ApplicationTalkingTestSuite, shallSendTalkMessage)
 {
     const std::string message = "Two little cats.";
-    EXPECT_CALL(timerPortMock, stopTimer());
-    using namespace std::chrono_literals;
-    EXPECT_CALL(timerPortMock, startTimer(2000ms));
+    prepareTimer();
     EXPECT_CALL(btsPortMock, sendTalkMessage(message, PHONE_NUMBER));
     objectUnderTest.handleSendTalkMessage(message);
+}
+
+TEST_F(ApplicationTalkingTestSuite, shallShowReceivedTalkMessage)
+{
+    prepareTimer();
+    EXPECT_CALL(userPortMock, showCallView("Message"));
+    objectUnderTest.handleTalkMessage("Message");
 }
 
 }

@@ -32,7 +32,9 @@ void TimerPort::startTimer(const Duration duration)
 void TimerPort::stopTimer()
 {
     running = false;
-    timerThread.detach();
+    if(timerThread.joinable()){
+        timerThread.detach();
+    }
     logger.logDebug("Stop timer");
 }
 

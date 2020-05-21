@@ -19,6 +19,7 @@ public:
     MOCK_METHOD(void, handleFailedToSendSms, (), (final));
     MOCK_METHOD(void, handleCallRequest, (common::PhoneNumber), (final));
     MOCK_METHOD(void, handleCallAccepted, (common::PhoneNumber), (final));
+    MOCK_METHOD(void, handleTalkMessage, (const std::string), (final));
 };
 
 class IBtsPortMock : public IBtsPort

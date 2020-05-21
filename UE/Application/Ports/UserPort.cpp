@@ -148,8 +148,8 @@ void UserPort::showCallView(const std::string incomingText){
     IUeGui::ICallMode& callView = gui.setCallMode();
     callView.appendIncomingText(incomingText);
     gui.setAcceptCallback([&](){
-        callView.clearOutgoingText();
         handler->handleSendTalkMessage(callView.getOutgoingText());
+        callView.clearOutgoingText();
     });
     //Call drop
     gui.setRejectCallback(nullptr);
