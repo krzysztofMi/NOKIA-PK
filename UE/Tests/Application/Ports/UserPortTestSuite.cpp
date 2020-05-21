@@ -72,7 +72,7 @@ TEST_F(UserPortTestSuite, shallShowRequestCallView)
 {
     auto phoneNumber = common::PhoneNumber{100};
     EXPECT_CALL(guiMock, setAlertMode()).WillOnce(ReturnRef(textViewModeMock));
-    EXPECT_CALL(textViewModeMock, setText("New call\n100"));
+    EXPECT_CALL(textViewModeMock, setText("New call from\n100"));
     EXPECT_CALL(guiMock, setAcceptCallback);
     EXPECT_CALL(guiMock, setRejectCallback);
     objectUnderTest.showRequestCallView(phoneNumber);

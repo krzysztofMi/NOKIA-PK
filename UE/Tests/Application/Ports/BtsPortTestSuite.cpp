@@ -130,8 +130,18 @@ TEST_F(BtsPortTestSuite, shallHandleCallRequest)
     auto phoneNumber = common::PhoneNumber{100};
     EXPECT_CALL(handlerMock, handleCallRequest(phoneNumber));
     common::OutgoingMessage message{common::MessageId::CallRequest,
-                                common::PhoneNumber{100},
+                                phoneNumber,
                                 PHONE_NUMBER};
+    messageCallback(message.getMessage());
+}
+
+TEST_F(BtsPortTestSuite, shallHandleCallAccept)
+{
+    auto phoneNumber = common::PhoneNumber{100};
+    EXPECT_CALL(handlerMock, handleCallAccepted(phoneNumber));
+    common::OutgoingMessage message{common::MessageId::CallAccepted,
+                                    common::PhoneNumber{100},
+                                    PHONE_NUMBER};
     messageCallback(message.getMessage());
 }
 
