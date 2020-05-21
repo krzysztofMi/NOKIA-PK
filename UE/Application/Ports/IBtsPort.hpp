@@ -30,6 +30,7 @@ public:
     virtual void sendMsg(common::PhoneNumber, std::string) = 0;
     virtual void sendCallResponse(common::PhoneNumber, bool) = 0;
     virtual void sendCallRequest(common::PhoneNumber to) = 0;
+    virtual void sendTalkMessage(const std::string, const common::PhoneNumber) = 0;
 };
 
 }

@@ -128,4 +128,12 @@ void BtsPort::sendCallRequest(common::PhoneNumber to) {
     };
     transport.sendMessage(msg.getMessage());
 }
+
+void BtsPort::sendTalkMessage(const std::string message, const common::PhoneNumber to) {
+    logger.logDebug("Send talk message", message, to);
+    common::OutgoingMessage msg {
+        common::MessageId::CallTalk, phoneNumber, to
+    };
+    transport.sendMessage(msg.getMessage());
+}
 }

@@ -32,8 +32,7 @@ public:
     void showRequestCallView(common::PhoneNumber phoneNumber) override;
     void showStartDialView() override;
     void showDialingView(common::PhoneNumber to) override;
-    void showCallView() override;
-
+    void showCallView(const std::string incomingMessage) override;
 
 private:
     common::PrefixedLogger logger;

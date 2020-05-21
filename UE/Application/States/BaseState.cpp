@@ -90,4 +90,9 @@ void BaseState::handleSendCallRequest(common::PhoneNumber to)
     logger.logError("Unexpected handleSendCallRequest", to);
 }
 
+void BaseState::handleSendTalkMessage(const std::string message)
+{
+    logger.logError("Unexpected handleSendTalkMessage", message);
+}
+
 }

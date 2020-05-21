@@ -33,6 +33,7 @@ public:
     void handleUpdateSms(Sms sms) override;
     void handleCallResponse(common::PhoneNumber, bool pass) override;
     void handleSendCallRequest(common::PhoneNumber to) override;
+    void handleSendTalkMessage(const std::string) override;
 
 protected:
     Context& context;

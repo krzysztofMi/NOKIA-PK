@@ -88,4 +88,8 @@ void Application::handleCallAccepted(common::PhoneNumber phoneNumber){
 void Application::handleSendCallRequest(common::PhoneNumber to){
     context.state->handleSendCallRequest(to);
 }
+
+void Application::handleSendTalkMessage(const std::string incomingMessage){
+    context.state->handleSendTalkMessage(incomingMessage);
+}
 }

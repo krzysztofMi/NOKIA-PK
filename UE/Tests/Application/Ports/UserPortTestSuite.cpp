@@ -99,7 +99,10 @@ TEST_F(UserPortTestSuite, shallShowDialingView)
 TEST_F(UserPortTestSuite, shallShowCallView)
 {
     EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
-    objectUnderTest.showCallView();
+    EXPECT_CALL(callModeMock, appendIncomingText("aaa"));
+    EXPECT_CALL(guiMock, setAcceptCallback);
+    EXPECT_CALL(guiMock, setRejectCallback);
+    objectUnderTest.showCallView("aaa");
 }
 
 }

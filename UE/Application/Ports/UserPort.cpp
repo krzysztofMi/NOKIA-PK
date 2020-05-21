@@ -8,7 +8,6 @@
 #include <iostream>
 #include <string>
 
-
 namespace ue
 {
 
@@ -145,8 +144,15 @@ void UserPort::showDialingView(common::PhoneNumber to){
     });
 }
 
-void UserPort::showCallView(){
+void UserPort::showCallView(const std::string incomingText){
     IUeGui::ICallMode& callView = gui.setCallMode();
+    callView.appendIncomingText(incomingText);
+    gui.setAcceptCallback([&](){
+        callView.clearOutgoingText();
+        handler->handleSendTalkMessage(callView.getOutgoingText());
+    });
+    //Call drop
+    gui.setRejectCallback(nullptr);
 }
 
 void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
