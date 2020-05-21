@@ -80,4 +80,9 @@ void BaseState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass)
     logger.logError("Unexpected handleCallResponse", phoneNumber, pass);
 }
 
+void BaseState::handleSendCallRequest(common::PhoneNumber to)
+{
+    logger.logError("Unexpected handleSendCallRequest", to);
+}
+
 }

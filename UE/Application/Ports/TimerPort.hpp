@@ -1,6 +1,7 @@
 #pragma once
 
 #include <thread>
+#include <atomic>
 #include "ITimerPort.hpp"
 #include "Logger/PrefixedLogger.hpp"
 
@@ -23,7 +24,7 @@ private:
     common::PrefixedLogger logger;
     ITimerEventsHandler* handler = nullptr;
     std::thread timerThread;
-
+    std::atomic<bool> running;
     void waitForTimeout(const Duration duration) const;
 };
 

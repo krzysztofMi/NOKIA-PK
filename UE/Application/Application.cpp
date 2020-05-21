@@ -80,4 +80,8 @@ void Application::handleCallRequest(common::PhoneNumber phoneNumber){
 void Application::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
     context.state->handleCallResponse(phoneNumber, pass);
 }
+
+void Application::handleSendCallRequest(common::PhoneNumber to){
+    context.state->handleSendCallRequest(to);
+}
 }
