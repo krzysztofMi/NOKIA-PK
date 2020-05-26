@@ -23,7 +23,8 @@ public:
     void handleAttachReject() override;
     void handleSmsReceived(common::PhoneNumber from, std::string message) override;
     void handleFailedToSendSms() override;
-    void handleCallRequest(common::PhoneNumber phoneNumber) override;
+    void handleCallRequest(common::PhoneNumber to) override;
+    void handleCallAccepted(common::PhoneNumber) override;
 
     // IUserEventsHandler interface
     void handleSendMsg(common::PhoneNumber receiver, std::string content) override;

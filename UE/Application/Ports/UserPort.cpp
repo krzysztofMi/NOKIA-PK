@@ -119,7 +119,7 @@ void UserPort::showReceivedSmsNotification()
 
 void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
     IUeGui::ITextMode& newCallView = gui.setAlertMode();
-    newCallView.setText("New call\n" + std::to_string(phoneNumber.value));
+    newCallView.setText("New call from\n" + std::to_string(phoneNumber.value));
     gui.setAcceptCallback([&, phoneNumber]{
         handler->handleCallResponse(phoneNumber, true);
     });

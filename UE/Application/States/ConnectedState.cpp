@@ -61,7 +61,7 @@ void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
 void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
     context.bts.sendCallResponse(phoneNumber, pass);
     if(pass){
-        context.setState<TalkingState>();
+        context.setState<TalkingState>(phoneNumber);
     }else{
         context.user.showMenuView();
     }
@@ -73,6 +73,11 @@ void ConnectedState::handleSendCallRequest(common::PhoneNumber to){
     using namespace std::chrono_literals;
     context.timer.startTimer(60000ms);
     context.user.showDialingView(to);
+}
+
+void ConnectedState::handleCallAccepted(common::PhoneNumber from){
+    context.setState<TalkingState>(from);
+    context.timer.stopTimer();
 }
 
 }
