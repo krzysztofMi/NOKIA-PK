@@ -32,6 +32,7 @@ public:
     void handleAttachReject() override;
     void handleSmsReceived(common::PhoneNumber PhoneNumber, std::string msg) override;
     void handleFailedToSendSms() override;
+    void handlePeerUeBecomesUnknown() override;
     void handleCallRequest(common::PhoneNumber phoneNumber) override;
     void handleCallAccepted(common::PhoneNumber PhoneNumber) override;
     void handleTalkMessage(const std::string) override;

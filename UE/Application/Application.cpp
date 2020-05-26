@@ -57,7 +57,7 @@ void Application::handleFailedToSendSms()
     context.state->handleFailedToSendSms();
 }
 
-void BaseState::handlePeerUeBecomesUnknown(){
+void Application::handlePeerUeBecomesUnknown(){
     context.state->handlePeerUeBecomesUnknown();
 }
 
