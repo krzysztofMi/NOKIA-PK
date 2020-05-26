@@ -25,6 +25,7 @@ public:
     void handleFailedToSendSms() override;
     void handleCallRequest(common::PhoneNumber to) override;
     void handleCallAccepted(common::PhoneNumber) override;
+    void handlePeerUeBecomesUnknown() override;
     void handleTalkMessage(const std::string) override;
 
     // IUserEventsHandler interface

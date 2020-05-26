@@ -87,6 +87,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         {
             logger.logError("Unknow recipient.");
             handler->handleFailedToSendSms();
+            handler->handlePeerUeBecomesUnknown();
             break;
         }
         default:

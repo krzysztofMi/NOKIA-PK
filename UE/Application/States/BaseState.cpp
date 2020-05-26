@@ -100,4 +100,8 @@ void BaseState::handleTalkMessage(const std::string message)
     logger.logError("Unexpected handle talk message", message);
 }
 
+void BaseState::handlePeerUeBecomesUnknown(){
+    logger.logError("Unexpected handlePeerUeBecomesUnknown");
+}
+
 }
