@@ -186,7 +186,11 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleCallAccept)
 
 TEST_F(ApplicationTalkingTestSuite, shallHandlePeerUeBecomesUnknown)
 {
-    EXPECT_CALL(userPortMock, showMenuView());
+    EXPECT_CALL(userPortMock, showPeerUeBecomesUnknown);
+    EXPECT_CALL(userPortMock, showConnected);
+    EXPECT_CALL(userPortMock, showMenuView);
+    EXPECT_CALL(timerPortMock, stopTimer);
+    objectUnderTest.handlePeerUeBecomesUnknown();
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallSendTalkMessage)
