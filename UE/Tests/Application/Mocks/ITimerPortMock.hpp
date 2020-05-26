@@ -2,6 +2,7 @@
 
 #include <gmock/gmock.h>
 #include "Ports/ITimerPort.hpp"
+#include "Messages/PhoneNumber.hpp"
 
 namespace ue
 {
@@ -13,7 +14,6 @@ public:
     ~ITimerEventsHandlerMock() override;
 
     MOCK_METHOD(void, handleTimeout, (), (final));
-
 };
 
 class ITimerPortMock : public ITimerPort

@@ -19,6 +19,12 @@ void ConnectedState::handleSmsReceived(common::PhoneNumber phoneNumber,
     context.user.showReceivedSmsNotification();
 }
 
+void ConnectedState::handleTimeout(){
+    context.logger.logError("timeout");
+    context.user.showMenuView();
+    context.bts.sendCallResponse(this->currentlyDialedPhoneNumber, 0);
+}
+
 void ConnectedState::handleFailedToSendSms()
 {
     std::unique_ptr<Sms> sms = context.database.getSmsById(lastSmsID);
@@ -54,8 +60,9 @@ void ConnectedState::handleUpdateSms(Sms sms){
 
 void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
     using namespace std::chrono_literals;
-    context.timer.startTimer(30000ms);
+    this->currentlyDialedPhoneNumber = phoneNumber;
     context.user.showRequestCallView(phoneNumber);
+    context.timer.startTimer(30000ms);
 }
 
 void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
