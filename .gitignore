@@ -17,3 +17,5 @@ UE/Application/Database/Schema/smsDatabase.db
 COMMON/Tests/COMMON_UT
 BTS/Tests/Application/BtsApplicationUT
 BTS/BTS
+UE/UE
+UE/Tests/Application/UeApplicationUT

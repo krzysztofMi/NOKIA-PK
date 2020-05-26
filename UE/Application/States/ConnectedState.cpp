@@ -60,8 +60,8 @@ void ConnectedState::handleUpdateSms(Sms sms){
 
 void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
     using namespace std::chrono_literals;
-    context.user.showRequestCallView(phoneNumber);
     this->currentlyDialedPhoneNumber = phoneNumber;
+    context.user.showRequestCallView(phoneNumber);
     context.timer.startTimer(30000ms);
 }
 

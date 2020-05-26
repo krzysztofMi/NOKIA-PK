@@ -160,7 +160,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccept)
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
 {
     EXPECT_CALL(userPortMock, showMenuView());
-    EXPECT_CALL(btsPortMock, sendCallResponse(PHONE_NUMBER, false));
+    EXPECT_CALL(btsPortMock, sendCallResponse(_, false));
     objectUnderTest.handleTimeout();
 }
 
