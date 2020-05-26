@@ -31,7 +31,10 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
     void handleSmsReceived(common::PhoneNumber PhoneNumber, std::string msg) override;
+    void handleFailedToSendSms() override;
     void handleCallRequest(common::PhoneNumber phoneNumber) override;
+    void handleCallAccepted(common::PhoneNumber PhoneNumber) override;
+    void handleTalkMessage(const std::string) override;
 
     // IUserPortHandler interface
     void handleSendMsg(common::PhoneNumber receiver, std::string content) override;
@@ -39,6 +42,8 @@ public:
     void handleGetAllSmsBySent(bool sent) override;
     void handleUpdateSms(Sms sms) override;
     void handleCallResponse(common::PhoneNumber, bool pass) override;
+    void handleSendCallRequest(common::PhoneNumber to) override;
+    void handleSendTalkMessage(const std::string incomingMessage) override;
 
 private:
     Context context;

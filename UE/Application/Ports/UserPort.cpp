@@ -2,10 +2,11 @@
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
+#include "UeGui/IDialMode.hpp"
+#include "UeGui/ICallMode.hpp"
 #include <vector>
 #include <iostream>
 #include <string>
-
 
 namespace ue
 {
@@ -43,6 +44,7 @@ void UserPort::showMenuView(){
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("SMS Received", "");
     menu.addSelectionListItem("SMS Sent", "");
+    menu.addSelectionListItem("Call", "");
     setMenuCallbacks(menu);
 }
 
@@ -54,6 +56,10 @@ void UserPort::showComposeSms(){
         handler->handleSendMsg(composeSms.getPhoneNumber(),composeSms.getSmsText());
         composeSms.clearSmsText();
     });
+    returnToMenuCallback();
+}
+
+void UserPort::returnToMenuCallback(){
     gui.setRejectCallback([&](){
         showMenuView();
     });
@@ -64,48 +70,41 @@ void UserPort::showSmsListView(std::vector<Sms> smsVector){
     ids.clear();
     smsListView.clearSelectionList();
     for(auto sms: smsVector){
-        smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+        if (sms.read == true){
+            if(sms.failed) smsListView.addSelectionListItem(std::to_string(sms.phoneNumber)+" Failed", "");
+            else smsListView.addSelectionListItem(std::to_string(sms.phoneNumber), "");
+        }
+        else{
+            std::string smsStatus = std::to_string(sms.phoneNumber);
+            smsStatus=smsStatus+" Unread";
+            smsListView.addSelectionListItem(smsStatus,"");
+
+        }
+
         ids.push_back(sms.id);
     }
     //Callbacks
     gui.setAcceptCallback([&](){
         handler->handleGetSmsById(ids.at(smsListView.getCurrentItemIndex().second));
     });
-    gui.setRejectCallback([&](){
-        showMenuView();
-    });
+    returnToMenuCallback();
 }
 
 void UserPort::showSmsView(Sms sms){
-    IUeGui::ITextMode& view = gui.setViewTextMode();
-    view.setText(sms.text);
-
+    IUeGui::ITextMode& smsView = gui.setViewTextMode();
+    smsView.setText(sms.text);
+    if(sms.read != true){
+        sms.read = true;
+        handler->handleUpdateSms(sms);
+    }
     //Callbacks
-    gui.setAcceptCallback([&]{});
+    gui.setAcceptCallback(nullptr);
     gui.setRejectCallback([&]{
-        switch(previousView){
+        switch(view){
             case View::SMS_RECEIVED:
                 handler->handleGetAllSmsBySent(false);
                 break;
             case View::SMS_SENT:
-                handler->handleGetAllSmsBySent(true);
-                break;
-        }
-    });
-}
-
-void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
-    gui.setAcceptCallback([&](){
-        switch(menu.getCurrentItemIndex().second){
-            case 0:
-                showComposeSms();
-                break;
-            case 1:
-                previousView = View::SMS_RECEIVED;
-                handler->handleGetAllSmsBySent(false);
-                break;
-            case 2:
-                previousView = View::SMS_SENT;
                 handler->handleGetAllSmsBySent(true);
                 break;
         }
@@ -119,7 +118,7 @@ void UserPort::showReceivedSmsNotification()
 
 void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
     IUeGui::ITextMode& newCallView = gui.setAlertMode();
-    newCallView.setText("New call\n" + std::to_string(phoneNumber.value));
+    newCallView.setText("New call from\n" + std::to_string(phoneNumber.value));
     gui.setAcceptCallback([&, phoneNumber]{
         handler->handleCallResponse(phoneNumber, true);
     });
@@ -128,9 +127,54 @@ void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
     });
 }
 
-void UserPort::showCallView(){
-    IUeGui::ICallMode&  callView = gui.setCallMode();
+void UserPort::showStartDialView(){
+    IUeGui::IDialMode&  callView = gui.setDialMode();
+    gui.setAcceptCallback([&](){
+        handler->handleSendCallRequest(callView.getPhoneNumber());
+    });
+    returnToMenuCallback();
+}
+
+void UserPort::showDialingView(common::PhoneNumber to){
+    IUeGui::ITextMode& dialingView = gui.setAlertMode();
+    dialingView.setText("Waiting for call accept...");
+    gui.setAcceptCallback(nullptr);
+    gui.setRejectCallback([&, to]{
+        handler->handleCallResponse(to, false);
+    });
+}
+
+void UserPort::showCallView(const std::string incomingText){
+    IUeGui::ICallMode& callView = gui.setCallMode();
+    callView.appendIncomingText(incomingText);
+    gui.setAcceptCallback([&](){
+        handler->handleSendTalkMessage(callView.getOutgoingText());
+        callView.clearOutgoingText();
+    });
+    //Call drop
+    gui.setRejectCallback(nullptr);
+}
+
+void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){
+    gui.setAcceptCallback([&](){
+        switch(menu.getCurrentItemIndex().second){
+            case 0:
+                view = View::COMPOSE_SMS;
+                showComposeSms();
+                break;
+            case 1:
+                view = View::SMS_RECEIVED;
+                handler->handleGetAllSmsBySent(false);
+                break;
+            case 2:
+                view = View::SMS_SENT;
+                handler->handleGetAllSmsBySent(true);
+                break;
+            case 3:
+                view = View::CALL;
+                showStartDialView();
+        }
+    });
 }
 
 }
-

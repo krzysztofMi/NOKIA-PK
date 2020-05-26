@@ -25,6 +25,15 @@ void ConnectedState::handleTimeout(){
     context.bts.sendCallResponse(this->currentlyDialedPhoneNumber, 0);
 }
 
+void ConnectedState::handleFailedToSendSms()
+{
+    std::unique_ptr<Sms> sms = context.database.getSmsById(lastSmsID);
+    if(sms!=nullptr) {
+        sms->failed = true;
+        context.database.updateSms(*sms.get());
+    }
+}
+
 void ConnectedState::handleDisconnected(){
     logger.logInfo("disconnected");
     context.setState<NotConnectedState>();
@@ -32,7 +41,8 @@ void ConnectedState::handleDisconnected(){
 
 void ConnectedState::handleSendMsg(common::PhoneNumber receiver, std::string content) {
     context.bts.sendMsg(receiver, content);
-    context.database.saveSms(content, receiver, true, true);
+    Sms lastSms = context.database.saveSms(content, receiver, true, true);
+    lastSmsID = lastSms.id;
 }
 
 void ConnectedState::handleGetAllSmsBySent(bool sent){
@@ -58,10 +68,22 @@ void ConnectedState::handleCallRequest(common::PhoneNumber phoneNumber){
 void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
     context.bts.sendCallResponse(phoneNumber, pass);
     if(pass){
-        context.setState<TalkingState>();
+        context.setState<TalkingState>(phoneNumber);
     }else{
         context.user.showMenuView();
     }
+    context.timer.stopTimer();
+}
+
+void ConnectedState::handleSendCallRequest(common::PhoneNumber to){
+    context.bts.sendCallRequest(to);
+    using namespace std::chrono_literals;
+    context.timer.startTimer(60000ms);
+    context.user.showDialingView(to);
+}
+
+void ConnectedState::handleCallAccepted(common::PhoneNumber from){
+    context.setState<TalkingState>(from);
     context.timer.stopTimer();
 }
 

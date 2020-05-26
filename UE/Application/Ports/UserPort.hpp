@@ -9,7 +9,7 @@
 namespace ue
 {
 
-enum class View{SMS_SENT, SMS_RECEIVED};
+enum class View{MENU, COMPOSE_SMS, SMS_SENT, SMS_RECEIVED, SMS, CALL};
 
 class UserPort : public IUserPort
 {
@@ -25,12 +25,14 @@ public:
     void showConnecting() override;
     void showConnected() override;
     void showReceivedSmsNotification() override;
+    void showMenuView() override;
     void showComposeSms();
     void showSmsListView(std::vector<Sms> smsVector) override;
     void showSmsView(Sms sms) override;
     void showRequestCallView(common::PhoneNumber phoneNumber) override;
-    void showCallView() override;
-    void showMenuView() override;
+    void showStartDialView() override;
+    void showDialingView(common::PhoneNumber to) override;
+    void showCallView(const std::string incomingMessage) override;
 
 private:
     common::PrefixedLogger logger;
@@ -38,8 +40,11 @@ private:
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
     std::vector<int> ids;
+    View view;
+
     void setMenuCallbacks(IUeGui::IListViewMode& menu);
-    View previousView;
+    void setDummyAcceptCallback();
+    void returnToMenuCallback();
 };
 
 }

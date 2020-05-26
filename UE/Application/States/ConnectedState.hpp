@@ -9,6 +9,7 @@ class ConnectedState : public BaseState
 {
 private:
     common::PhoneNumber currentlyDialedPhoneNumber;
+    int lastSmsID;
 public:
     ConnectedState(Context& context);
 
@@ -20,12 +21,14 @@ public:
     void handleGetAllSmsBySent(bool) final;
     void handleGetSmsById(int id) final;
     void handleUpdateSms(Sms sms) final;
-
+    void handleFailedToSendSms() final;
     void handleCallRequest(common::PhoneNumber phoneNumber) final;
     void handleCallResponse(common::PhoneNumber phoneNumber, bool pass) final;
     
     void handleTimeout() final;
 
+    void handleCallAccepted(common::PhoneNumber from) final;
+    void handleSendCallRequest(common::PhoneNumber to) final;
 };
 
 }

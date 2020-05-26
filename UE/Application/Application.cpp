@@ -52,6 +52,11 @@ void Application::handleSmsReceived(common::PhoneNumber from, std::string messag
     context.state->handleSmsReceived(from, message);
 }
 
+void Application::handleFailedToSendSms()
+{
+    context.state->handleFailedToSendSms();
+}
+
 void Application::handleSendMsg(common::PhoneNumber receiver, std::string content) {
     context.state->handleSendMsg(receiver, content);
 }
@@ -74,5 +79,21 @@ void Application::handleCallRequest(common::PhoneNumber phoneNumber){
 
 void Application::handleCallResponse(common::PhoneNumber phoneNumber, bool pass){
     context.state->handleCallResponse(phoneNumber, pass);
+}
+
+void Application::handleCallAccepted(common::PhoneNumber phoneNumber){
+    context.state->handleCallAccepted(phoneNumber);
+}
+
+void Application::handleSendCallRequest(common::PhoneNumber to){
+    context.state->handleSendCallRequest(to);
+}
+
+void Application::handleSendTalkMessage(const std::string incomingMessage){
+    context.state->handleSendTalkMessage(incomingMessage);
+}
+
+void Application::handleTalkMessage(const std::string message){
+    context.state->handleTalkMessage(message);
 }
 }
