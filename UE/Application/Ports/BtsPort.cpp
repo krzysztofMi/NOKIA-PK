@@ -114,4 +114,12 @@ void BtsPort::sendCallResponse(common::PhoneNumber receiver, bool pass) {
     };
     transport.sendMessage(msg.getMessage());
 }
+
+void BtsPort::sendCallRequest(common::PhoneNumber to) {
+    logger.logDebug("Send call request:", to);
+    common::OutgoingMessage msg {
+        common::MessageId::CallRequest, phoneNumber, to
+    };
+    transport.sendMessage(msg.getMessage());
+}
 }

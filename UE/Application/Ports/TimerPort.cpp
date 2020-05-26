@@ -25,18 +25,21 @@ void TimerPort::stop()
 void TimerPort::startTimer(const Duration duration)
 {
     logger.logDebug("Start timer: ", duration.count(), "ms");
+    running = true;
     timerThread = std::thread {&TimerPort::waitForTimeout, this, duration};
 }
 
 void TimerPort::stopTimer()
 {
-    pthread_cancel(timerThread.native_handle());
+    running = false;
+    timerThread.detach();
     logger.logDebug("Stop timer");
 }
 
 void TimerPort::waitForTimeout(Duration duration) const
 {
     std::this_thread::sleep_for(duration);
+    if(!running) { return; }
     handler->handleTimeout();
 }
 

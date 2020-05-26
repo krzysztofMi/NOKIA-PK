@@ -68,4 +68,11 @@ void ConnectedState::handleCallResponse(common::PhoneNumber phoneNumber, bool pa
     context.timer.stopTimer();
 }
 
+void ConnectedState::handleSendCallRequest(common::PhoneNumber to){
+    context.bts.sendCallRequest(to);
+    using namespace std::chrono_literals;
+    context.timer.startTimer(60000ms);
+    context.user.showDialingView(to);
+}
+
 }

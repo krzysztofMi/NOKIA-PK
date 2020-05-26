@@ -21,6 +21,8 @@ protected:
     StrictMock<IUeGuiMock> guiMock;
     StrictMock<IListViewModeMock> listViewModeMock;
     StrictMock<ITextModeMock> textViewModeMock;
+    StrictMock<IDialModeMock> dialModeMock;
+    StrictMock<ICallModeMock> callModeMock;
     StrictMock<ISmsDatabasePortMock> smsDatabaseMock;
     UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
 
@@ -74,6 +76,30 @@ TEST_F(UserPortTestSuite, shallShowRequestCallView)
     EXPECT_CALL(guiMock, setAcceptCallback);
     EXPECT_CALL(guiMock, setRejectCallback);
     objectUnderTest.showRequestCallView(phoneNumber);
+}
+
+TEST_F(UserPortTestSuite, shallShowStartDialView)
+{
+    EXPECT_CALL(guiMock, setDialMode()).WillOnce(ReturnRef(dialModeMock));
+    EXPECT_CALL(guiMock, setAcceptCallback);
+    EXPECT_CALL(guiMock, setRejectCallback);
+    objectUnderTest.showStartDialView();
+}
+
+TEST_F(UserPortTestSuite, shallShowDialingView)
+{
+    auto phoneNumber = common::PhoneNumber{100};
+    EXPECT_CALL(guiMock, setAlertMode()).WillOnce(ReturnRef(textViewModeMock));
+    EXPECT_CALL(textViewModeMock, setText("Waiting for call accept..."));
+    EXPECT_CALL(guiMock, setAcceptCallback);
+    EXPECT_CALL(guiMock, setRejectCallback);
+    objectUnderTest.showDialingView(phoneNumber);
+}
+
+TEST_F(UserPortTestSuite, shallShowCallView)
+{
+    EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
+    objectUnderTest.showCallView();
 }
 
 }

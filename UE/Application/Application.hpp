@@ -40,6 +40,7 @@ public:
     void handleGetAllSmsBySent(bool sent) override;
     void handleUpdateSms(Sms sms) override;
     void handleCallResponse(common::PhoneNumber, bool pass) override;
+    void handleSendCallRequest(common::PhoneNumber to);
 
 private:
     Context context;

@@ -22,6 +22,7 @@ public:
     void handleFailedToSendSms() final;
     void handleCallRequest(common::PhoneNumber phoneNumber) final;
     void handleCallResponse(common::PhoneNumber phoneNumber, bool pass) final;
+    void handleSendCallRequest(common::PhoneNumber to) final;
 };
 
 }

@@ -122,6 +122,16 @@ TEST_F(ApplicationConnectedTestSuite, shallSaveReceivedSms)
     objectUnderTest.handleSmsReceived(FROM, message);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallSendCallRequest)
+{
+    auto& to = FROM;
+    using namespace std::chrono_literals;
+    EXPECT_CALL(btsPortMock, sendCallRequest(to));
+    EXPECT_CALL(timerPortMock, startTimer(60000ms));
+    EXPECT_CALL(userPortMock, showDialingView(to));
+    objectUnderTest.handleSendCallRequest(to);
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
 {
     using namespace std::chrono_literals;
