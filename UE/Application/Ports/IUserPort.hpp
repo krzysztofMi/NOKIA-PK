@@ -30,6 +30,7 @@ public:
     virtual void showConnected() = 0;
     virtual void showReceivedSmsNotification() = 0;
     virtual void showSmsListView(std::vector<Sms>) = 0;
+    virtual void showPeerUeBecomesUnknown(common::PhoneNumber phoneNumber) = 0;
     virtual void showSmsView(Sms) = 0;
     virtual void showRequestCallView(common::PhoneNumber) = 0;
     virtual void showStartDialView() = 0;

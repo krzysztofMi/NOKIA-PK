@@ -184,6 +184,11 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleCallAccept)
     //Implemented in ApplicationTalkingTestSuite constructor
 }
 
+TEST_F(ApplicationTalkingTestSuite, shallHandlePeerUeBecomesUnknown)
+{
+    
+}
+
 TEST_F(ApplicationTalkingTestSuite, shallSendTalkMessage)
 {
     const std::string message = "Two little cats.";

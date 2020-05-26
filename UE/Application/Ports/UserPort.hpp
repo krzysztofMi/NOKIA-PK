@@ -22,6 +22,7 @@ public:
     void stop();
 
     void showNotConnected() override;
+    void showPeerUeBecomesUnknown() override;
     void showConnecting() override;
     void showConnected() override;
     void showReceivedSmsNotification() override;
