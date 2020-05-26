@@ -186,7 +186,7 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleCallAccept)
 
 TEST_F(ApplicationTalkingTestSuite, shallHandlePeerUeBecomesUnknown)
 {
-    
+    EXPECT_CALL(userPortMock, showMenuView());
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallSendTalkMessage)

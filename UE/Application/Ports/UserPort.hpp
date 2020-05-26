@@ -22,7 +22,7 @@ public:
     void stop();
 
     void showNotConnected() override;
-    void showPeerUeBecomesUnknown() override;
+    void showPeerUeBecomesUnknown(common::PhoneNumber phoneNumber) override;
     void showConnecting() override;
     void showConnected() override;
     void showReceivedSmsNotification() override;

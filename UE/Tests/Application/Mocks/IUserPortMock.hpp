@@ -36,6 +36,7 @@ public:
     MOCK_METHOD(void, showSmsListView, (std::vector<Sms>), (final));
     MOCK_METHOD(void, showSmsView, (Sms), (final));
     MOCK_METHOD(void, showRequestCallView, (common::PhoneNumber), (final));
+    MOCK_METHOD(void, showPeerUeBecomesUnknown, (common::PhoneNumber), (final));
     MOCK_METHOD(void, showDialingView, (common::PhoneNumber), (final));
     MOCK_METHOD(void, showStartDialView, (), (final));
     MOCK_METHOD(void, showCallView, (const std::string), (final));

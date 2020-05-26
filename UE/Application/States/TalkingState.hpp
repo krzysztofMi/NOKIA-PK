@@ -2,6 +2,7 @@
 
 #include "BaseState.hpp"
 
+
 namespace ue {
 
 class TalkingState : public BaseState{
@@ -10,6 +11,7 @@ public:
 
     void handleSendTalkMessage(const std::string) final;
     void handleTalkMessage(const std::string) final;
+    void handlePeerUeBecomesUnknown() final;
 private:
     common::PhoneNumber phone;
 };
