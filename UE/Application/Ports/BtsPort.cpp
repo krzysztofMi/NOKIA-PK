@@ -92,13 +92,18 @@ namespace ue
                 assert(failingMessageId != messageId);
                 if (failingMessageId == common::MessageId::Sms)
                 {
-                    logger.logError("Unknown recipient SMS. ");
+                    logger.logError("common::MessageId::Sms");
                     handler->handleFailedToSendSms();
                 }
                 else if (failingMessageId == common::MessageId::CallAccepted)
                 {
-                    logger.logError("Unknown recipient CallAccepted.");
+                    logger.logError("common::MessageId::CallAccepted");
                     handler->handlePeerUeBecomesUnknown();
+                }
+                else if (failingMessageId == common::MessageId::CallDropped)
+                {
+                    logger.logError("common::MessageId::CallDropped");
+                    // Ignore message
                 }
                 break;
             }
