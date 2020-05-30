@@ -87,9 +87,10 @@ namespace ue
             }
             case common::MessageId::UnknownRecipient:
             {
-                logger.logError("Unknown recipient. ");
+                logger.logError("Unknown recipient.");
                 common::MessageId failingMessageId = reader.readMessageId();
                 assert(failingMessageId != messageId);
+
                 if (failingMessageId == common::MessageId::Sms)
                 {
                     logger.logError("common::MessageId::Sms");
@@ -104,11 +105,18 @@ namespace ue
                 {
                     logger.logError("common::MessageId::CallDropped");
                     // Ignore message
+                    // so that it basically hangs
+                }
+                else
+                {
+                    // UE disconnected
+                    logger.logError("");
+                    handler->handlePeerUeBecomesUnknown();
                 }
                 break;
             }
             default:
-                logger.logError("unknow message: ", messageId, ", from: ", from);
+                logger.logError("unknow nmessage: ", messageId, ", from: ", from);
             }
         }
         catch (std::exception const &ex)
