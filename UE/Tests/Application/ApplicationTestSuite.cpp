@@ -199,5 +199,11 @@ TEST_F(ApplicationTalkingTestSuite, shallShowReceivedTalkMessage)
     objectUnderTest.handleTalkMessage("Message");
 }
 
+TEST_F(ApplicationConnectingTestSuite, handleCallDrop){
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, showMenuView);
+    objectUnderTest.handleCallDrop();
+
+}
 }
 
