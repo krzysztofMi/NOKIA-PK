@@ -88,8 +88,8 @@ void ConnectedState::handleCallAccepted(common::PhoneNumber from){
 }
 
 void ConnectedState::handleCallDrop(){
-    context.user.showMenuView();
     context.timer.stopTimer();
+    context.user.showMenuView();
 
 }
 
