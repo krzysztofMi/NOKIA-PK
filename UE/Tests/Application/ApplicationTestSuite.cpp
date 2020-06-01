@@ -164,6 +164,15 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
     objectUnderTest.handleTimeout();
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandlePeerUeBecomesUnknown)
+{
+    EXPECT_CALL(userPortMock, showPeerUeBecomesUnknown);
+    EXPECT_CALL(userPortMock, showConnected);
+    EXPECT_CALL(userPortMock, showMenuView);
+    EXPECT_CALL(timerPortMock, stopTimer);
+    objectUnderTest.handlePeerUeBecomesUnknown();
+}
+
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
 {
     ApplicationTalkingTestSuite(){

@@ -110,7 +110,7 @@ namespace ue
                 else
                 {
                     // UE disconnected
-                    logger.logError("");
+                    logger.logError("common::MessageId::*");
                     handler->handlePeerUeBecomesUnknown();
                 }
                 break;

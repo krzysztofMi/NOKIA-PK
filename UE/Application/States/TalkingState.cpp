@@ -23,7 +23,8 @@ void TalkingState::handleTalkMessage(const std::string message){
     context.user.showCallView(message);
 }
 
-void TalkingState::handlePeerUeBecomesUnknown(){
+void TalkingState::handlePeerUeBecomesUnknown()
+{
     context.timer.stopTimer();
     context.user.showPeerUeBecomesUnknown(this->phone);
     context.setState<ConnectedState>();

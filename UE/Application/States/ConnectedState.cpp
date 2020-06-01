@@ -34,6 +34,13 @@ void ConnectedState::handleFailedToSendSms()
     }
 }
 
+void ConnectedState::handlePeerUeBecomesUnknown()
+{
+    context.timer.stopTimer();
+    context.user.showPeerUeBecomesUnknown(this->currentlyDialedPhoneNumber);
+    context.setState<ConnectedState>();
+}
+
 void ConnectedState::handleDisconnected(){
     logger.logInfo("disconnected");
     context.setState<NotConnectedState>();
