@@ -88,35 +88,41 @@ namespace ue
             case common::MessageId::UnknownRecipient:
             {
                 logger.logError("Unknown recipient.");
-                common::MessageId failingMessageId = reader.readMessageId();
-                assert(failingMessageId != messageId);
+                common::MessageId failingMessageId = ;
 
-                if (failingMessageId == common::MessageId::Sms)
+                switch (reader.readMessageId())
                 {
-                    logger.logError("common::MessageId::Sms");
-                    handler->handleFailedToSendSms();
-                }
-                else if (failingMessageId == common::MessageId::CallAccepted)
-                {
-                    logger.logError("common::MessageId::CallAccepted");
-                    handler->handlePeerUeBecomesUnknown();
-                }
-                else if (failingMessageId == common::MessageId::CallDropped)
-                {
-                    logger.logError("common::MessageId::CallDropped");
-                    // Ignore message
-                    // so that it basically hangs
-                }
-                else
-                {
-                    // UE disconnected
-                    logger.logError("common::MessageId::*");
-                    handler->handlePeerUeBecomesUnknown();
+                    case common::MessageId::Sms:
+                    {
+                        logger.logError("common::MessageId::Sms");
+                        handler->handleFailedToSendSms();
+                        break;
+                    }
+                    case common::MessageId::CallAccepted:
+                    {
+                        logger.logError("common::MessageId::CallAccepted");
+                        handler->handlePeerUeBecomesUnknown();
+                        break;
+                    }
+                    case common::MessageId::CallDropped:
+                    {
+                        logger.logError("common::MessageId::CallDropped");
+                        // Ignore message
+                        // so that it basically hangs
+                        break;
+                    }
+                    default:
+                    {
+                        // UE disconnected
+                        logger.logError("common::MessageId::*");
+                        handler->handlePeerUeBecomesUnknown();
+                        break;
+                    }
                 }
                 break;
             }
             default:
-                logger.logError("unknow nmessage: ", messageId, ", from: ", from);
+                logger.logError("Unknown message: ", messageId, ", from: ", from);
             }
         }
         catch (std::exception const &ex)
