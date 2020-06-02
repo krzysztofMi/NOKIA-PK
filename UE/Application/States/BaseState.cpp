@@ -100,4 +100,9 @@ void BaseState::handleTalkMessage(const std::string message)
     logger.logError("Unexpected handle talk message", message);
 }
 
+void BaseState::handleCallDrop(){
+    logger.logError("Unexpected handle calldrop message");
+
+}
+
 }

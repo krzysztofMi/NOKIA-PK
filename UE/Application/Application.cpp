@@ -96,4 +96,9 @@ void Application::handleSendTalkMessage(const std::string incomingMessage){
 void Application::handleTalkMessage(const std::string message){
     context.state->handleTalkMessage(message);
 }
+
+void Application::handleCallDrop(){
+    context.state->handleCallDrop();
+}
+
 }

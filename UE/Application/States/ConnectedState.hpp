@@ -29,6 +29,8 @@ public:
 
     void handleCallAccepted(common::PhoneNumber from) final;
     void handleSendCallRequest(common::PhoneNumber to) final;
+
+    void handleCallDrop() final;
 };
 
 }

@@ -89,6 +89,12 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleFailedToSendSms();
             break;
         }
+        case common::MessageId::CallDropped:
+        {
+            logger.logDebug("BtsPort, Call drop", from);
+            handler->handleCallDrop();
+            break;
+        }
         default:
             logger.logError("unknow message: ", msgId, ", from: ", from);
         }
