@@ -145,14 +145,15 @@ namespace ue
         messageCallback(message.getMessage());
     }
 
-    // TEST_F(BtsPortTestSuite, shallHandlePeerUeBecomesUnknownCallAccepted)
-    // {
-    //     EXPECT_CALL(handlerMock, handlePeerUeBecomesUnknown());
-    //     common::OutgoingMessage message{common::MessageId::UnknownRecipient,
-    //                                     common::PhoneNumber{},
-    //                                     PHONE_NUMBER};
-    //     messageCallback(message.getMessage());
-    // }
+    TEST_F(BtsPortTestSuite, shallHandlePeerUeBecomesUnknownCallAccepted)
+    {
+        EXPECT_CALL(handlerMock, handlePeerUeBecomesUnknown());
+        common::OutgoingMessage message{common::MessageId::UnknownRecipient,
+                                        common::PhoneNumber{},
+                                        PHONE_NUMBER};
+        message.writeMessageId(common::MessageId::CallAccepted);
+        messageCallback(message.getMessage());
+    }
 
     TEST_F(BtsPortTestSuite, shallSendAcceptCallResponse)
     {
