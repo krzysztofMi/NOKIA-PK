@@ -155,6 +155,35 @@ namespace ue
         messageCallback(message.getMessage());
     }
 
+    TEST_F(BtsPortTestSuite, shallHandlePeerUeBecomesUnknownCallDroped)
+    {
+        common::OutgoingMessage message{common::MessageId::UnknownRecipient,
+                                        common::PhoneNumber{},
+                                        PHONE_NUMBER};
+        message.writeMessageId(common::MessageId::CallDropped);
+        messageCallback(message.getMessage());
+    }
+
+    TEST_F(BtsPortTestSuite, shallHandlePeerUeBecomesUnknownSmsMessage)
+    {
+        EXPECT_CALL(handlerMock, handleFailedToSendSms());
+        common::OutgoingMessage message{common::MessageId::UnknownRecipient,
+                                        common::PhoneNumber{},
+                                        PHONE_NUMBER};
+        message.writeMessageId(common::MessageId::Sms);
+        messageCallback(message.getMessage());
+    }
+
+    TEST_F(BtsPortTestSuite, shallHandlePeerUeBecomesUnknownDisconnected)
+    {
+        EXPECT_CALL(handlerMock, handlePeerUeBecomesUnknown());
+        common::OutgoingMessage message{common::MessageId::UnknownRecipient,
+                                        common::PhoneNumber{},
+                                        PHONE_NUMBER};
+        message.writeMessageId(common::MessageId::UnknownRecipient);
+        messageCallback(message.getMessage());
+    }
+
     TEST_F(BtsPortTestSuite, shallSendAcceptCallResponse)
     {
         auto receiver = common::PhoneNumber{100};
