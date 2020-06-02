@@ -164,6 +164,13 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
     objectUnderTest.handleTimeout();
 }
 
+TEST_F(ApplicationConnectedTestSuite, handleCallDrop){
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, showMenuView);
+    objectUnderTest.handleCallDrop();
+
+}
+
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
 {
     ApplicationTalkingTestSuite(){
@@ -199,11 +206,6 @@ TEST_F(ApplicationTalkingTestSuite, shallShowReceivedTalkMessage)
     objectUnderTest.handleTalkMessage("Message");
 }
 
-TEST_F(ApplicationConnectingTestSuite, handleCallDrop){
-    EXPECT_CALL(timerPortMock, stopTimer);
-    EXPECT_CALL(userPortMock, showMenuView);
-    objectUnderTest.handleCallDrop();
 
-}
 }
 
