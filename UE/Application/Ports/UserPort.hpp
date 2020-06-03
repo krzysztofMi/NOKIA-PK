@@ -28,6 +28,7 @@ public:
     void showReceivedSmsNotification() override;
     void showMenuView() override;
     void showComposeSms();
+    void clearCallMessages() override;
     void showSmsListView(std::vector<Sms> smsVector) override;
     void showSmsView(Sms sms) override;
     void showRequestCallView(common::PhoneNumber phoneNumber) override;
@@ -39,6 +40,7 @@ private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
+    common::PhoneNumber receiverNumber;
     IUserEventsHandler* handler = nullptr;
     std::vector<int> ids;
     View view;

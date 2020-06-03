@@ -124,9 +124,11 @@ void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
     IUeGui::ITextMode& newCallView = gui.setAlertMode();
     newCallView.setText("New call from\n" + std::to_string(phoneNumber.value));
     gui.setAcceptCallback([&, phoneNumber]{
+        receiverNumber = phoneNumber;
         handler->handleCallResponse(phoneNumber, true);
     });
     gui.setRejectCallback([&, phoneNumber]{
+        receiverNumber.value = 0;
         handler->handleCallResponse(phoneNumber, false);
     });
 }
@@ -134,16 +136,19 @@ void UserPort::showRequestCallView(common::PhoneNumber phoneNumber){
 void UserPort::showStartDialView(){
     IUeGui::IDialMode&  callView = gui.setDialMode();
     gui.setAcceptCallback([&](){
-        handler->handleSendCallRequest(callView.getPhoneNumber());
+        if(callView.getPhoneNumber().value!=phoneNumber.value)
+            handler->handleSendCallRequest(callView.getPhoneNumber());
     });
     returnToMenuCallback();
 }
 
 void UserPort::showDialingView(common::PhoneNumber to){
     IUeGui::ITextMode& dialingView = gui.setAlertMode();
+    receiverNumber = to;
     dialingView.setText("Waiting for call accept...");
     gui.setAcceptCallback(nullptr);
     gui.setRejectCallback([&, to]{
+        receiverNumber.value = 0;
         handler->handleCallResponse(to, false);
     });
 }
@@ -154,9 +159,19 @@ void UserPort::showCallView(const std::string incomingText){
     gui.setAcceptCallback([&](){
         handler->handleSendTalkMessage(callView.getOutgoingText());
         callView.clearOutgoingText();
+
     });
-    //Call drop
-    gui.setRejectCallback(nullptr);
+
+    gui.setRejectCallback([&](){
+        if(receiverNumber.value!=0)
+            handler->handleSendCallDrop(phoneNumber,receiverNumber);
+        else showMenuView();
+    });
+}
+
+void UserPort::clearCallMessages() {
+    IUeGui::ICallMode& callView = gui.setCallMode();
+    callView.clearIncomingText();
 }
 
 void UserPort::setMenuCallbacks(IUeGui::IListViewMode& menu){

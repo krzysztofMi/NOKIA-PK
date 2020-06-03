@@ -105,4 +105,9 @@ void Application::handleCallDrop(){
     context.state->handleCallDrop();
 }
 
+void Application::handleSendCallDrop(common::PhoneNumber sender, common::PhoneNumber receiver)
+{
+    context.state->handleSendCallDrop(sender,receiver);
+}
+
 }

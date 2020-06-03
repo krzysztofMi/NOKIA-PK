@@ -176,6 +176,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandlePeerUeBecomesUnknown)
 
 TEST_F(ApplicationConnectedTestSuite, handleCallDrop)
 {
+    EXPECT_CALL(userPortMock, clearCallMessages);
     EXPECT_CALL(timerPortMock, stopTimer);
     EXPECT_CALL(userPortMock, showMenuView);
     objectUnderTest.handleCallDrop();
@@ -210,6 +211,25 @@ TEST_F(ApplicationTalkingTestSuite, shallHandlePeerUeBecomesUnknown)
     objectUnderTest.handlePeerUeBecomesUnknown();
 }
 
+TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
+{
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(btsPortMock, sendCallDrop(PHONE_NUMBER, common::PhoneNumber{120}));
+    EXPECT_CALL(userPortMock, clearCallMessages);
+    EXPECT_CALL(userPortMock, showConnected);
+    EXPECT_CALL(userPortMock, showMenuView);
+    objectUnderTest.handleSendCallDrop(PHONE_NUMBER, common::PhoneNumber{120});
+}
+
+TEST_F(ApplicationTalkingTestSuite, shallHandleCallDrop)
+{
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, clearCallMessages);
+    EXPECT_CALL(userPortMock, showConnected);
+    EXPECT_CALL(userPortMock, showMenuView);
+    objectUnderTest.handleCallDrop();
+}
+
 TEST_F(ApplicationTalkingTestSuite, shallSendTalkMessage)
 {
     const std::string message = "Two little cats.";
@@ -224,7 +244,6 @@ TEST_F(ApplicationTalkingTestSuite, shallShowReceivedTalkMessage)
     EXPECT_CALL(userPortMock, showCallView("Message"));
     objectUnderTest.handleTalkMessage("Message");
 }
-
 
 }
 

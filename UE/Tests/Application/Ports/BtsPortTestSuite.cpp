@@ -259,6 +259,18 @@ namespace ue
         messageCallback(message.getMessage());
     }
 
+    TEST_F(BtsPortTestSuite, shallCallDroppedDuringEstablishedConnection )
+    {
+        common::BinaryMessage msg;
+        EXPECT_CALL(transportMock, sendMessage(_)).WillOnce(SaveArg<0>(&msg));
+        objectUnderTest.sendCallDrop(PHONE_NUMBER, common::PhoneNumber{120});
+        common::IncomingMessage reader(msg);
+        ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallDropped, reader.readMessageId()));
+        ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+        ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{120}, reader.readPhoneNumber()));
+        ASSERT_NO_THROW(reader.checkEndOfMessage());
+    }
+
 } // namespace ue
 
 
