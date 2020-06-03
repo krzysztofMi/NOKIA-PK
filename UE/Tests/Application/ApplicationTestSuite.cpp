@@ -164,6 +164,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
     objectUnderTest.handleTimeout();
 }
 
+
 TEST_F(ApplicationConnectedTestSuite, shallHandlePeerUeBecomesUnknown)
 {
     EXPECT_CALL(userPortMock, showPeerUeBecomesUnknown);
@@ -171,6 +172,13 @@ TEST_F(ApplicationConnectedTestSuite, shallHandlePeerUeBecomesUnknown)
     EXPECT_CALL(userPortMock, showMenuView);
     EXPECT_CALL(timerPortMock, stopTimer);
     objectUnderTest.handlePeerUeBecomesUnknown();
+}
+
+TEST_F(ApplicationConnectedTestSuite, handleCallDrop)
+{
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, showMenuView);
+    objectUnderTest.handleCallDrop();
 }
 
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
@@ -216,6 +224,7 @@ TEST_F(ApplicationTalkingTestSuite, shallShowReceivedTalkMessage)
     EXPECT_CALL(userPortMock, showCallView("Message"));
     objectUnderTest.handleTalkMessage("Message");
 }
+
 
 }
 

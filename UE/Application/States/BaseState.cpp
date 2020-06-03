@@ -103,5 +103,11 @@ void BaseState::handleTalkMessage(const std::string message)
 void BaseState::handlePeerUeBecomesUnknown(){
     logger.logError("Unexpected handlePeerUeBecomesUnknown");
 }
+  
+void BaseState::handleCallDrop(){
+    logger.logError("Unexpected handle calldrop message");
+}
+
+}
 
 }

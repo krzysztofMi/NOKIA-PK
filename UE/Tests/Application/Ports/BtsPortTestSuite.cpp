@@ -249,4 +249,16 @@ namespace ue
         messageCallback(message.getMessage());
     }
 
+    TEST_F(BtsPortTestSuite, shallCallDropped )
+    {
+        auto phoneNumber = common::PhoneNumber{100};
+        EXPECT_CALL(handlerMock, handleCallDrop());
+        common::OutgoingMessage message{common::MessageId::CallDropped,
+                                        common::PhoneNumber{100},
+                                        PHONE_NUMBER};
+        messageCallback(message.getMessage());
+    }
+
 } // namespace ue
+
+

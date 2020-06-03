@@ -36,6 +36,7 @@ public:
     void handleCallRequest(common::PhoneNumber phoneNumber) override;
     void handleCallAccepted(common::PhoneNumber PhoneNumber) override;
     void handleTalkMessage(const std::string) override;
+    void handleCallDrop() override;
 
     // IUserPortHandler interface
     void handleSendMsg(common::PhoneNumber receiver, std::string content) override;
