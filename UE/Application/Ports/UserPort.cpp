@@ -30,6 +30,10 @@ void UserPort::showNotConnected(){
     gui.showNotConnected();
 }
 
+void UserPort::showPeerUeBecomesUnknown(common::PhoneNumber phoneNumber){
+    gui.showPeerUserNotAvailable(phoneNumber);
+}
+
 void UserPort::showConnecting(){
     gui.showConnecting();
 }

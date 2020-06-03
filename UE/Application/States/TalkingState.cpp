@@ -1,4 +1,5 @@
 #include "TalkingState.hpp"
+#include "ConnectedState.hpp"
 
 namespace ue {
 
@@ -21,4 +22,12 @@ void TalkingState::handleTalkMessage(const std::string message){
     context.timer.startTimer(120000ms);
     context.user.showCallView(message);
 }
+
+void TalkingState::handlePeerUeBecomesUnknown()
+{
+    context.timer.stopTimer();
+    context.user.showPeerUeBecomesUnknown(this->phone);
+    context.setState<ConnectedState>();
+}
+
 }

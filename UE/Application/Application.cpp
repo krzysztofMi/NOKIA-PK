@@ -57,6 +57,10 @@ void Application::handleFailedToSendSms()
     context.state->handleFailedToSendSms();
 }
 
+void Application::handlePeerUeBecomesUnknown(){
+    context.state->handlePeerUeBecomesUnknown();
+}
+
 void Application::handleSendMsg(common::PhoneNumber receiver, std::string content) {
     context.state->handleSendMsg(receiver, content);
 }

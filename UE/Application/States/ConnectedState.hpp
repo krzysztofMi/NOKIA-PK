@@ -10,8 +10,9 @@ class ConnectedState : public BaseState
 private:
     common::PhoneNumber currentlyDialedPhoneNumber;
     int lastSmsID;
+
 public:
-    ConnectedState(Context& context);
+    ConnectedState(Context &context);
 
     void handleSmsReceived(common::PhoneNumber phoneNumber, std::string msg) final;
 
@@ -24,7 +25,8 @@ public:
     void handleFailedToSendSms() final;
     void handleCallRequest(common::PhoneNumber phoneNumber) final;
     void handleCallResponse(common::PhoneNumber phoneNumber, bool pass) final;
-    
+    void handlePeerUeBecomesUnknown() final;
+
     void handleTimeout() final;
 
     void handleCallAccepted(common::PhoneNumber from) final;
@@ -33,4 +35,4 @@ public:
     void handleCallDrop() final;
 };
 
-}
+} // namespace ue
