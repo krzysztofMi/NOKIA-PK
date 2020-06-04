@@ -3,6 +3,23 @@
 namespace ue {
 
     SmsDatabasePort::SmsDatabasePort(common::ILogger& logger, std::string databasePath): smsRepository{logger, databasePath}{
+        sqlite3 *db;
+        sqlite3_open(databasePath.c_str(), &db);
+        const char* sql = "CREATE TABLE IF NOT EXISTS sms_message("
+                            "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
+                            "text TEXT NOT NULL,"
+                            "phone_number INTEGER NOT NULL,"
+                            "read INTEGER NOT NULL DEFAULT 0,"
+                            "sent INTEGER NOT NULL,"
+                            "failed INTEGER NOT NULL DEFAULT 0"
+                            ");";
+        char *errMsg;
+        int errorCode;
+        errorCode = sqlite3_exec(db, sql, NULL, 0, &errMsg);
+        if(errorCode){
+            std::cout<<std::string(errMsg)<<std::endl;
+        }
+        sqlite3_close(db);
     }
 
     SmsDatabasePort::~SmsDatabasePort(){}

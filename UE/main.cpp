@@ -18,7 +18,8 @@ int main(int argc, char* argv[])
 
     BtsPort bts(logger, tranport, phoneNumber);
     TimerPort timer(logger);
-    SmsDatabasePort database(logger, "../../NOKIA-PK/UE/Application/Database/Schema/smsDatabase.db");
+    SmsDatabasePort database(logger, "../../NOKIA-PK/UE/Application/Database/Schema/smsDatabase" 
+    + std::to_string(phoneNumber.value) + ".db");
     UserPort user(logger, gui, phoneNumber);
     Application app(phoneNumber, logger, bts, user, timer, database);
     bts.start(app);
