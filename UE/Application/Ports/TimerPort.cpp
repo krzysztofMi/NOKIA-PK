@@ -4,6 +4,9 @@
 namespace ue
 {
 
+std::mutex TimerPort::mutex;
+std::condition_variable TimerPort::cv;
+
 TimerPort::TimerPort(common::ILogger &logger)
     : logger(logger, "[TIMER PORT]")
 {}
@@ -18,32 +21,34 @@ void TimerPort::stop()
 {
     logger.logDebug("Stoped");
     handler = nullptr;
-    if(timerThread.joinable()){
-        timerThread.detach();
-    }
 }
 
 void TimerPort::startTimer(const Duration duration)
 {
     logger.logDebug("Start timer: ", duration.count(), "ms");
-    running = true;
+    flag = false;
     timerThread = std::thread {&TimerPort::waitForTimeout, this, duration};
+    timerThread.detach();
 }
 
 void TimerPort::stopTimer()
 {
-    running = false;
-    if(timerThread.joinable()){
-        timerThread.detach();
+    {
+        std::lock_guard<std::mutex> lock(mutex);
+        flag = true;
     }
+    cv.notify_one();
     logger.logDebug("Stop timer");
 }
 
-void TimerPort::waitForTimeout(Duration duration) const
+void TimerPort::waitForTimeout(Duration duration) const 
 {
-    std::this_thread::sleep_for(duration);
-    if(!running) { return; }
-    handler->handleTimeout();
+    std::unique_lock<std::mutex> lock(mutex);
+    cv.wait_for(lock, duration, [this](){return flag;});
+    if(!flag){
+        handler->handleTimeout();    
+    }
+    return;
 }
 
 }

@@ -245,5 +245,12 @@ TEST_F(ApplicationTalkingTestSuite, shallShowReceivedTalkMessage)
     objectUnderTest.handleTalkMessage("Message");
 }
 
+TEST_F(ApplicationTalkingTestSuite, shallHandleTimeout)
+{
+    EXPECT_CALL(btsPortMock, sendCallResponse(_, false));
+    EXPECT_CALL(userPortMock, showConnected());
+    EXPECT_CALL(userPortMock, showMenuView());
+    objectUnderTest.handleTimeout();
+}
 }
 
