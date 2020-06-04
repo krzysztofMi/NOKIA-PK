@@ -14,6 +14,7 @@ public:
     void handlePeerUeBecomesUnknown() final;
     void handleSendCallDrop(common::PhoneNumber sender, common::PhoneNumber receiver) final;
     void handleCallDrop() final;
+    void handleTimeout() final;
 private:
     common::PhoneNumber phone;
 };

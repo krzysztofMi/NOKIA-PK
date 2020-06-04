@@ -41,9 +41,13 @@ void TalkingState::handleSendCallDrop(common::PhoneNumber sender, common::PhoneN
 void TalkingState::handleCallDrop()
 {
     context.timer.stopTimer();
-    context.logger.logDebug("Call dropped");
     context.user.clearCallMessages();
     context.setState<ConnectedState>();
 }
 
+void TalkingState::handleTimeout()
+{
+    context.bts.sendCallResponse(phone, false);
+    context.setState<ConnectedState>();
+}
 }

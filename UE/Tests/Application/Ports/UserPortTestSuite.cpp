@@ -105,4 +105,10 @@ TEST_F(UserPortTestSuite, shallShowCallView)
     objectUnderTest.showCallView("aaa");
 }
 
+TEST_F(UserPortTestSuite, shallClearCallMessage)
+{
+    EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
+    EXPECT_CALL(callModeMock, clearIncomingText());    
+    objectUnderTest.clearCallMessages();
+}
 }
