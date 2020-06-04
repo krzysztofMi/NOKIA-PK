@@ -20,6 +20,7 @@ public:
     void activateForDialMode();
 
     void appendIncomingText(const std::string &text) override;
+    void clearIncomingText() override;
     void clearOutgoingText() override;
     std::string getOutgoingText() const override;
 

@@ -108,5 +108,9 @@ void BaseState::handleCallDrop(){
     logger.logError("Unexpected handle calldrop message");
 }
 
+void BaseState::handleSendCallDrop(common::PhoneNumber sender, common::PhoneNumber receiver){
+    logger.logError("Unexpected handle calldrop message after established connection", receiver);
+}
+
 }
 

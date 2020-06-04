@@ -49,6 +49,12 @@ void QtCallMode::appendIncomingText(const std::string &text)
     emit appendTalkTextSignal(QString::fromStdString(text));
 }
 
+void QtCallMode::clearIncomingText()
+{
+    incomingTextEdit.clear();
+    appendIncomingText("Incoming text ");
+}
+
 void QtCallMode::clearOutgoingText()
 {
     outgoingTextEdit.clear();

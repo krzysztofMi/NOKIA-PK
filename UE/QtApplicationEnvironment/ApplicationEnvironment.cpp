@@ -34,7 +34,7 @@ std::string logFilename(PhoneNumber phoneNumber)
 
 ApplicationEnvironment::ApplicationEnvironment(int& argc, char* argv[])
     : configuration(ApplicationEnvironment::readConfiguration(argc, argv)),
-      myPhoneNumber(PhoneNumber{configuration->getNumber<decltype(PhoneNumber::value)>("phone", 123)}),
+      myPhoneNumber(PhoneNumber{configuration->getNumber<decltype(PhoneNumber::value)>("phone", 120)}),
       logFile(logFilename(myPhoneNumber)),
       loggerBase(logFile),
       logger(loggerBase, getPhoneNumberPrefix(myPhoneNumber)),

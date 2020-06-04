@@ -120,7 +120,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::CallDropped:
         {
-            logger.logDebug("BtsPort, Call drop", from);
+            logger.logError("BtsPort, Call drop from ", from);
             handler->handleCallDrop();
             break;
         }
@@ -176,6 +176,14 @@ void BtsPort::sendTalkMessage(const std::string message, const common::PhoneNumb
     common::OutgoingMessage msg{
         common::MessageId::CallTalk, phoneNumber, to};
     msg.writeText(message);
+    transport.sendMessage(msg.getMessage());
+}
+
+void BtsPort::sendCallDrop(common::PhoneNumber sender, common::PhoneNumber receiver)
+{
+    logger.logDebug("Send call dropped: ", receiver);
+    common::OutgoingMessage msg{
+        common::MessageId::CallDropped, phoneNumber, receiver};
     transport.sendMessage(msg.getMessage());
 }
 } // namespace ue
